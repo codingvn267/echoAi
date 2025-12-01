@@ -11,7 +11,7 @@ export const DashboardLayout = async ({ children }: { children: React.ReactNode 
   return (
     <AuthGuard>
       <OrganizationGuard>
-        <SidebarProvider defaultOpen={true}>
+        <SidebarProvider defaultOpen={defaultOpen}>
           <DashboardSidebar/>
           <main className="flex flex-1 flex-col">{children}</main>
         </SidebarProvider>
