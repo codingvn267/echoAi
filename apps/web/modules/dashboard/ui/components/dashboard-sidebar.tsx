@@ -116,6 +116,11 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive(item.url)}
+                    className={cn(
+                      isActive(item.url)
+                        ? "bg-gradient-to-b from-[#7dd3e4] to-[#c4eef5]! hover:brightness-95"
+                        : "hover:bg-[#e8f9fc]!"
+                    )}
                     tooltip={item.title}
                   >
                     <Link href={item.url}>
@@ -138,7 +143,11 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive(item.url)}
-                    tooltip={item.title}
+                    className={cn(
+                      isActive(item.url)
+                        ? "bg-gradient-to-b from-[#7dd3e4] to-[#c4eef5]! hover:brightness-95"
+                        : "hover:bg-[#e8f9fc]!"
+                    )}
                   >
                     <Link href={item.url}>
                       <item.icon className="size-4" />
@@ -160,6 +169,11 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     isActive={isActive(item.url)}
+                    className={cn(
+                      isActive(item.url)
+                        ? "bg-gradient-to-b from-[#7dd3e4] to-[#c4eef5]! hover:brightness-95"
+                        : "hover:bg-[#e8f9fc]!"
+                    )}
                     tooltip={item.title}
                   >
                     <Link href={item.url}>
@@ -187,7 +201,7 @@ export const DashboardSidebar = () => {
                     "w-full! flex-row-reverse! justify-end! gap-2! group-data-[collapsible=icon]:justify-center! text-sidebar-foreground!",
                   userButtonOuterIdentifier:
                     "pl-0! group-data-[collapsible=icon]:hidden!",
-                  avatarBox: "size-4!"
+                  avatarBox: "size-4!",
                 },
               }}
             />
