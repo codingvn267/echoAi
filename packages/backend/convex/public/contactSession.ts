@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import { mutation } from "../_generated/server.js";
 
 
-const SESSION_DURATION_MS = 24*60*60*1000;
+const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
 
 export const create = mutation({
   args: {
@@ -39,5 +39,25 @@ export const create = mutation({
     })
 
     return contactSessionId;
+  },
+});
+
+export const validate = mutation ({
+  args: {
+    contactSessionId: v.id("contactSessions"),
+  },
+
+  handler: async (ctx, args) => {
+    const contactSession = await ctx.db.get(args.contactSessionId);
+
+    if (!contactSession) {
+      return { valid: false, reason: "Contact session not found!"};
+    }
+
+    if (contactSession.expiresAt < Date.now()) {
+      return { valid: false, reason: "Contact session expired!"}
+    }
+
+    return { valid: true, contactSession };
   },
 });
