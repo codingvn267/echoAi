@@ -24,7 +24,7 @@ const formSchema = z.object({
 });
 
 // Temporary test organizationId, before we add state management
-const organizationId = "123";
+// const organizationId = "123";
 
 export const WidgetAuthScreen = () => {
   const organizationId = useAtomValue(organizationIdAtom);
