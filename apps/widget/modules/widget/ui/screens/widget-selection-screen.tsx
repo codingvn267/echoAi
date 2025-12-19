@@ -2,6 +2,7 @@
 
 import { Button } from "@workspace/ui/components/button";
 import { WidgetHeader } from "../components/widget-header";
+import { WidgetFooter } from "../components/widget-footer";
 import { ChevronRightIcon, MessageSquareTextIcon } from "lucide-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
@@ -78,6 +79,7 @@ export const WidgetSelectionScreen = () => {
           <ChevronRightIcon />
         </Button>
       </div>
+      <WidgetFooter/>
     </>
   );
 };
