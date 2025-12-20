@@ -5,12 +5,12 @@ interface UseInfiniteScrollProps {
   loadMore: (numItems: number) => void;
   loadSize?: number;
   observerEnabled?: boolean;
-};
+}
 
 export const useInfiniteScroll = ({
   status,
   loadMore,
-  loadSize=10,
+  loadSize = 10,
   observerEnabled = true,
 }: UseInfiniteScrollProps) => {
   const topElementRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ export const useInfiniteScroll = ({
     return () => {
       observer.disconnect();
     };
-  }, [handleLoadMore, observerEnabled])
+  }, [handleLoadMore, observerEnabled]);
 
   return {
     topElementRef,
@@ -48,7 +48,6 @@ export const useInfiniteScroll = ({
     canLoadMore: status === "CanLoadMore",
     isLoadingMore: status === "LoadingMore",
     isLoadingFirstPage: status === "LoadingFirstPage",
-    isExhausted: status === "Exhausted"
+    isExhausted: status === "Exhausted",
   };
 };
-
