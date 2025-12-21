@@ -185,7 +185,7 @@ export const WidgetChatScreen = () => {
             <AIInputTools />
             <AIInputSubmit
               disabled={
-                conversation?.status === "resolved" || !form.formState.isValid
+                conversation?.status === "resolved" || !form.formState.isValid || form.formState.isSubmitting
               }
               status="ready"
               type="submit"
