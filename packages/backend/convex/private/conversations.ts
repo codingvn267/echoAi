@@ -6,6 +6,56 @@ import { components } from "../_generated/api.js";
 import { paginationOptsValidator, PaginationResult } from "convex/server";
 import { Doc } from "../_generated/dataModel.js";
 
+export const updateStatus = mutation({
+  args: {
+    conversationId: v.id("conversations"),
+    status: v.union(
+      v.literal("unresolved"),
+      v.literal("escalated"),
+      v.literal("resolved")
+    ),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (identity === null) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Identity not found",
+      });
+    }
+
+    const orgId = identity.orgId as string;
+
+    if (!orgId) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Organization not found",
+      });
+    }
+
+    const conversation = await ctx.db.get(args.conversationId);
+
+    if (!conversation) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Conversation not found",
+      });
+    }
+
+    if (conversation.organizationId !== orgId) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Invalid Organization ID",
+      });
+    }
+
+    await ctx.db.patch(args.conversationId, {
+      status: args.status,
+    });
+  },
+});
+
 export const getOne = query({
   args: {
     conversationId: v.id("conversations"),
