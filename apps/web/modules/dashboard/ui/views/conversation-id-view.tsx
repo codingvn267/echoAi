@@ -253,7 +253,7 @@ export const ConversationIdViewLoading = () => {
             return (
               <div
                 className={cn(
-                  "group flex w-full items-end justify-end gap-2 py-2 [&>div]: max-w-[80%]",
+                  "group flex w-full items-end justify-end gap-2 py-2 [&>div]:max-w-[80%]",
                   isUser ? "is-user" : "is-assistant flex-row-reverse"
                 )}
                 key={index}
