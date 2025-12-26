@@ -5,7 +5,7 @@ import { resolveConversation } from "../tools/resolveConversation.js";
 import { escalateConversation } from "../tools/escalateConversation.js";
 
 export const supportAgent = new Agent(components.agent, {
-  chat: openai.chat("gpt-4.1-mini"),
+  chat: openai.chat("gpt-4.o-mini"),
   instructions: `
   You are a professional customer support agent for our SaaS product.
 
