@@ -1,12 +1,16 @@
 import { openai } from "@ai-sdk/openai";
 import { Agent } from "@convex-dev/agent";
 import { components } from "@workspace/backend/_generated/api.js";
+import type { AgentComponent } from "@convex-dev/agent";
 import { resolveConversation } from "../tools/resolveConversation.js";
 import { escalateConversation } from "../tools/escalateConversation.js";
 
-export const supportAgent = new Agent(components.agent, {
-  chat: openai.chat("gpt-4.o-mini"),
-  instructions: `
+export const supportAgent = new Agent(
+  components.agent as unknown as AgentComponent,
+  {
+    name: "support",
+    languageModel: openai.chat("gpt-4o-mini"),
+    instructions: `
   You are a professional customer support agent for our SaaS product.
 
   Goals:
@@ -42,5 +46,6 @@ export const supportAgent = new Agent(components.agent, {
   Constraints:
   - Do not invent product policies, pricing, or actions you cannot perform.
   - Do not request or store sensitive data (passwords, full credit card numbers).
-  `
-});
+  `,
+  }
+);

@@ -53,7 +53,7 @@ export async function extractTextContent(
   }
 
   throw new Error(`Unsupported MIME type: ${mimeType}`);
-};
+}
 
 async function extractTextFileContent(
   ctx: { storage: StorageActionWriter },
@@ -104,7 +104,7 @@ async function extractPdfText(
       {
         role: "user",
         content: [
-          { type: "file", data: new URL(url), mimeType, filename },
+          { type: "file", data: new URL(url), mediaType: mimeType },
           {
             type: "text",
             text: "Extract the text from the PDF and print it without explaining you'll do so.",

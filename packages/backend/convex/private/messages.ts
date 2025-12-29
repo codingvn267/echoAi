@@ -3,7 +3,6 @@ import { action, mutation, query } from "../_generated/server.js";
 import { components } from "../_generated/api.js";
 import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { paginationOptsValidator } from "convex/server";
-import { saveMessage } from "@convex-dev/agent";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
@@ -95,13 +94,11 @@ export const create = mutation({
     if (conversation.status === "unresolved") {
       await ctx.db.patch(args.conversationId, {
         status: "escalated",
-      })
+      });
     }
 
-    await saveMessage(ctx, components.agent, {
+    await supportAgent.saveMessage(ctx, {
       threadId: conversation.threadId,
-      //TODO: check if "agentName" is needed or not
-      agentName: identity.familyName,
       message: {
         role: "assistant",
         content: args.prompt,

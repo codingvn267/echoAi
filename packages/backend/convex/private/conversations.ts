@@ -1,7 +1,7 @@
 import { mutation, query } from "../_generated/server.js";
 import { ConvexError, v } from "convex/values";
 import { supportAgent } from "../system/ai/agents/supportAgent.js";
-import { MessageDoc, saveMessage } from "@convex-dev/agent";
+import { MessageDoc } from "@convex-dev/agent";
 import { components } from "../_generated/api.js";
 import { paginationOptsValidator, PaginationResult } from "convex/server";
 import { Doc } from "../_generated/dataModel.js";
@@ -216,7 +216,7 @@ export const create = mutation({
       userId: args.organizationId,
     });
 
-    await saveMessage(ctx, components.agent, {
+    await supportAgent.saveMessage(ctx, {
       threadId,
       message: {
         role: "assistant",

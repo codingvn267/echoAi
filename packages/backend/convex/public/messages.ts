@@ -1,11 +1,10 @@
 import { ConvexError, v } from "convex/values";
 import { action, query } from "../_generated/server.js";
-import { components, internal } from "../_generated/api.js";
+import { internal } from "../_generated/api.js";
 import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { paginationOptsValidator } from "convex/server";
 import { escalateConversation } from "../system/ai/tools/escalateConversation.js";
 import { resolveConversation } from "../system/ai/tools/resolveConversation.js";
-import { saveMessage } from "@convex-dev/agent";
 
 export const create = action({
   args: {
@@ -65,10 +64,10 @@ export const create = action({
         }
       );
     } else {
-      await saveMessage (ctx, components.agent, {
+      await supportAgent.saveMessage(ctx, {
         threadId: args.threadId,
-        prompt: args.prompt
-      })
+        prompt: args.prompt,
+      });
     }
   },
 });
