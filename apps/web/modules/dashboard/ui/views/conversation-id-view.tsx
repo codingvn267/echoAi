@@ -131,7 +131,7 @@ export const ConversationIdView = ({
   };
 
   if (conversation === undefined || messages.status === "LoadingFirstPage") {
-    return <ConversationIdViewLoading/>
+    return <ConversationIdViewLoading />;
   }
 
   return (
@@ -226,6 +226,8 @@ export const ConversationIdView = ({
                   form.formState.isSubmitting ||
                   isEnhancing
                 }
+                status="ready"
+                type="submit"
               />
             </AIInputToolbar>
           </AIInput>

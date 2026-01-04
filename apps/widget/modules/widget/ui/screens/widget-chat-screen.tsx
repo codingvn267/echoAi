@@ -110,7 +110,7 @@ export const WidgetChatScreen = () => {
   };
 
   return (
-    <>
+    <div className="flex h-full flex-col">
       <WidgetHeader className="flex items-center justify-between">
         <div className="flex items-center gap-x-2">
           <Button size="icon" variant="transparent" onClick={onBack}>
@@ -152,47 +152,52 @@ export const WidgetChatScreen = () => {
             );
           })}
         </AIConversationContent>
+        <AIConversationScrollButton />
       </AIConversation>
-      <Form {...form}>
-        <AIInput
-          className="rounded-none border-x-0 border-b-0"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <FormField
-            control={form.control}
-            disabled={conversation?.status === "resolved"}
-            name="message"
-            render={({ field }) => (
-              <AIInputTextarea
-                disabled={conversation?.status === "resolved"}
-                onChange={field.onChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    form.handleSubmit(onSubmit)();
+      <div>
+        <Form {...form}>
+          <AIInput
+            className="rounded-none border-x-0 border-b-0"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              disabled={conversation?.status === "resolved"}
+              name="message"
+              render={({ field }) => (
+                <AIInputTextarea
+                  disabled={conversation?.status === "resolved"}
+                  onChange={field.onChange}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      form.handleSubmit(onSubmit)();
+                    }
+                  }}
+                  placeholder={
+                    conversation?.status === "resolved"
+                      ? "This conversation has been resolved."
+                      : "Type your message..."
                   }
-                }}
-                placeholder={
-                  conversation?.status === "resolved"
-                    ? "This conversation has been resolved."
-                    : "Type your message..."
-                }
-                value={field.value}
-              />
-            )}
-          />
-          <AIInputToolbar>
-            <AIInputTools />
-            <AIInputSubmit
-              disabled={
-                conversation?.status === "resolved" || !form.formState.isValid || form.formState.isSubmitting
-              }
-              status="ready"
-              type="submit"
+                  value={field.value}
+                />
+              )}
             />
-          </AIInputToolbar>
-        </AIInput>
-      </Form>
-    </>
+            <AIInputToolbar>
+              <AIInputTools />
+              <AIInputSubmit
+                disabled={
+                  conversation?.status === "resolved" ||
+                  !form.formState.isValid ||
+                  form.formState.isSubmitting
+                }
+                status="ready"
+                type="submit"
+              />
+            </AIInputToolbar>
+          </AIInput>
+        </Form>
+      </div>
+    </div>
   );
 };
