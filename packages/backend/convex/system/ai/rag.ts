@@ -4,7 +4,7 @@ import { components } from "@workspace/backend/_generated/api.js";
 
 const rag = new RAG(components.rag, {
   textEmbeddingModel: openai.embedding("text-embedding-3-large"),
-  embeddingDimension: 1536,
+  embeddingDimension: 3072,
 });
 
 export default rag;
