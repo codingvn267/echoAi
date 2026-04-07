@@ -73,7 +73,7 @@ export const ContactPanel = () => {
     return getCountryFromTimezone(contactSession?.metadata?.timezone);
   }, [contactSession?.metadata?.timezone]);
 
-  const accordianSections = useMemo<InfoSection[]>(() => {
+  const accordionSections = useMemo<InfoSection[]>(() => {
     if (!contactSession?.metadata) {
       return [];
     }
@@ -216,7 +216,7 @@ export const ContactPanel = () => {
             collapsible
             type="single"
           >
-            {accordianSections.map((section) => (
+            {accordionSections.map((section) => (
               <AccordionItem
                 className="rounded-none outline-none has-focus-visible:z-10 
                           as-focus-visible:border-ring has-focus-visible:ring-[3px]
