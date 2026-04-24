@@ -2,7 +2,7 @@
 
 import { BotIcon, PhoneIcon, SettingsIcon, UnplugIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/Link";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@workspace/ui/components/button";
 import {
