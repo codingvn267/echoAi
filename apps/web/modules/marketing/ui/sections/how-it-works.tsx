@@ -7,8 +7,8 @@ const STEPS = [
     title: "Embed the widget",
     description:
       "Drop one script tag on your site. Customize colors, greeting and suggestions in the dashboard.",
-    code: `<script src="https://widget.echoai.app/loader.js"
-  data-org="org_abc123"></script>`,
+    code: `<script src="https://widget.helora.ai/widget.js"
+  data-org-id="org_abc123" defer></script>`,
   },
   {
     num: "02",
@@ -43,11 +43,12 @@ export function HowItWorks() {
             How it works
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            From <em className="text-muted-foreground font-medium">"can a human help?"</em> to{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
-              instant answers
-            </span>{" "}
-            in 3 steps
+            From{" "}
+            <em className="text-muted-foreground font-medium">
+              "can a human help?"
+            </em>{" "}
+            to <span className="text-gradient-aurora">instant answers</span> in
+            3 steps
           </h2>
         </div>
 

@@ -8,7 +8,7 @@ export const WidgetFooter = () => {
   const setScreen = useSetAtom(screenAtom);
 
   return (
-    <footer className="flex items-center justify-between border-t bg-background">
+    <footer className="pb-safe flex items-center justify-between border-t bg-background">
       <Button
         className="h-14 flex-1 rounded-none"
         onClick={() => {setScreen("selection")}}
@@ -16,7 +16,7 @@ export const WidgetFooter = () => {
         variant="ghost"
       >
         <HomeIcon
-          className={cn("size-5", screen === "selection" && "text-primary")}
+          className={cn("size-5", screen === "selection" && "text-aurora-cyan")}
         />
       </Button>
       <Button
@@ -26,7 +26,7 @@ export const WidgetFooter = () => {
         variant="ghost"
       >
         <InboxIcon
-          className={cn("size-5", screen === "inbox" && "text-primary")}
+          className={cn("size-5", screen === "inbox" && "text-aurora-cyan")}
         />
       </Button>
     </footer>

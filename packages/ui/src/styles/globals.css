@@ -14,9 +14,9 @@
   --card-foreground: oklch(0.2046 0 0);
   --popover: oklch(0.9911 0 0);
   --popover-foreground: oklch(0.4386 0 0);
-  --primary: #7dd3e4;
-  --primary-foreground: oklch(0.2626 0.0147 166.4589);
-  --secondary: oklch(0.9940 0 0);
+  --primary: #52525b;
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.994 0 0);
   --secondary-foreground: oklch(0.2046 0 0);
   --muted: oklch(0.9461 0 0);
   --muted-foreground: oklch(0.5452 0 0);
@@ -26,20 +26,20 @@
   --destructive-foreground: oklch(0.9934 0.0032 17.2118);
   --border: oklch(0.9037 0 0);
   --input: oklch(0.9731 0 0);
-  --ring: oklch(0.8348 0.1302 160.9080);
-  --chart-1: oklch(0.8348 0.1302 160.9080);
-  --chart-2: oklch(0.6231 0.1880 259.8145);
+  --ring: oklch(0.21 0.006 285.9);
+  --chart-1: oklch(0.6231 0.188 259.8145);
+  --chart-2: oklch(0.7686 0.1647 70.0804);
   --chart-3: oklch(0.6056 0.2189 292.7172);
   --chart-4: oklch(0.7686 0.1647 70.0804);
   --chart-5: oklch(0.6959 0.1491 162.4796);
   --sidebar: oklch(0.9911 0 0);
   --sidebar-foreground: oklch(0.5452 0 0);
-  --sidebar-primary: oklch(0.8348 0.1302 160.9080);
-  --sidebar-primary-foreground: oklch(0.2626 0.0147 166.4589);
+  --sidebar-primary: oklch(0.21 0.006 285.9);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.9461 0 0);
   --sidebar-accent-foreground: oklch(0.2435 0 0);
   --sidebar-border: oklch(0.9037 0 0);
-  --sidebar-ring: oklch(0.8348 0.1302 160.9080);
+  --sidebar-ring: oklch(0.21 0.006 285.9);
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: monospace;
@@ -52,15 +52,57 @@
   --shadow-color: #000000;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
-  --shadow-sm: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
-  --shadow: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
-  --shadow-md: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
-  --shadow-lg: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
-  --shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
+  --shadow-sm:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+  --shadow:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+  --shadow-md:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
+  --shadow-lg:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
+  --shadow-xl:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
   --shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.43);
   --tracking-normal: 0.025em;
   --spacing: 0.25rem;
-   --sidebar-accent-light: #e8f9fc
+  --sidebar-accent-light: #f4f4f5;
+
+  /* ---------------------------------------------------------------------
+     Aurora Signal — foundational brand tokens (light / default)
+     Chromatic palette used for the "neo" button, ambient Aurora
+     backgrounds, and the scoped *-aurora surface classes below.
+  --------------------------------------------------------------------- */
+  --neo-blue: oklch(0.72 0.14 215);
+  --neo-green: oklch(0.8 0.17 152);
+  --aurora-cyan: oklch(0.78 0.11 210);
+  --aurora-sky: oklch(0.68 0.15 240);
+  --aurora-emerald: oklch(0.76 0.15 155);
+  --aurora-violet: oklch(0.58 0.19 296);
+  --aurora-coral: oklch(0.72 0.15 40);
+  --aurora-navy: oklch(0.24 0.045 255);
+  --aurora-glow-color: oklch(0.72 0.14 215 / 0.55);
+  /* Darker "text-safe" variants of the same hues, for use as text/gradient-
+     text colors on light backgrounds — the light surface tones above read
+     as ~1.8:1 contrast against the marketing background and fail WCAG AA.
+     These were verified to be >=5.8:1 against oklch(0.975 0.02 195). */
+  --aurora-cyan-text: oklch(0.46 0.14 210);
+  --aurora-emerald-text: oklch(0.44 0.15 155);
+  --aurora-violet-text: oklch(0.46 0.19 296);
+  --gradient-neo: linear-gradient(135deg, var(--neo-blue) 0%, var(--neo-green) 100%);
+  --gradient-aurora: linear-gradient(
+    135deg,
+    var(--aurora-cyan) 0%,
+    var(--aurora-violet) 55%,
+    var(--aurora-coral) 100%
+  );
+  --glow-neo: 0 0 26px -6px var(--aurora-glow-color);
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
+  --ease-signal: cubic-bezier(0.16, 1, 0.3, 1);
+  --text-display: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  --text-section: clamp(1.75rem, 1.4rem + 1.4vw, 2.75rem);
+  --text-body-lg: clamp(1.05rem, 1rem + 0.2vw, 1.25rem);
 }
 
 .dark {
@@ -70,8 +112,8 @@
   --card-foreground: oklch(0.9288 0.0126 255.5078);
   --popover: oklch(0.2603 0 0);
   --popover-foreground: oklch(0.7348 0 0);
-  --primary: #7dd3e4;
-  --primary-foreground: oklch(0.9213 0.0135 167.1556);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.21 0 0);
   --secondary: oklch(0.2603 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
   --muted: oklch(0.2393 0 0);
@@ -82,20 +124,20 @@
   --destructive-foreground: oklch(0.9368 0.0045 34.3092);
   --border: oklch(0.2809 0 0);
   --input: oklch(0.2603 0 0);
-  --ring: oklch(0.8003 0.1821 151.7110);
-  --chart-1: oklch(0.8003 0.1821 151.7110);
-  --chart-2: oklch(0.7137 0.1434 254.6240);
-  --chart-3: oklch(0.7090 0.1592 293.5412);
+  --ring: oklch(0.87 0 0);
+  --chart-1: oklch(0.7137 0.1434 254.624);
+  --chart-2: oklch(0.8369 0.1644 84.4286);
+  --chart-3: oklch(0.709 0.1592 293.5412);
   --chart-4: oklch(0.8369 0.1644 84.4286);
-  --chart-5: oklch(0.7845 0.1325 181.9120);
+  --chart-5: oklch(0.7845 0.1325 181.912);
   --sidebar: oklch(0.1822 0 0);
   --sidebar-foreground: oklch(0.6301 0 0);
-  --sidebar-primary: oklch(0.4365 0.1044 156.7556);
-  --sidebar-primary-foreground: oklch(0.9213 0.0135 167.1556);
+  --sidebar-primary: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0.21 0 0);
   --sidebar-accent: oklch(0.3132 0 0);
   --sidebar-accent-foreground: oklch(0.9851 0 0);
   --sidebar-border: oklch(0.2809 0 0);
-  --sidebar-ring: oklch(0.8003 0.1821 151.7110);
+  --sidebar-ring: oklch(0.87 0 0);
   --font-sans: Outfit, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: monospace;
@@ -108,13 +150,33 @@
   --shadow-color: #000000;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
-  --shadow-sm: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
-  --shadow: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
-  --shadow-md: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
-  --shadow-lg: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
-  --shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
+  --shadow-sm:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+  --shadow:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+  --shadow-md:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
+  --shadow-lg:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
+  --shadow-xl:
+    0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
   --shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.43);
   --color-sidebar-accent-light: var(--sidebar-accent-light);
+
+  /* Aurora Signal — chromatic teal-indigo variant (available for future
+     dark-mode use; not applied anywhere by default — see globals.css notes) */
+  --neo-blue: oklch(0.78 0.13 205);
+  --neo-green: oklch(0.82 0.16 150);
+  --aurora-cyan: oklch(0.7 0.12 205);
+  --aurora-sky: oklch(0.62 0.15 238);
+  --aurora-emerald: oklch(0.7 0.15 155);
+  --aurora-violet: oklch(0.66 0.18 296);
+  --aurora-coral: oklch(0.68 0.15 42);
+  --aurora-navy: oklch(0.22 0.045 255);
+  --aurora-glow-color: oklch(0.78 0.13 205 / 0.55);
+  --aurora-cyan-text: oklch(0.46 0.14 210);
+  --aurora-emerald-text: oklch(0.44 0.15 155);
+  --aurora-violet-text: oklch(0.46 0.19 296);
 }
 
 @theme inline {
@@ -150,6 +212,26 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Aurora Signal theme registrations — generates bg-neo-blue, text-aurora-navy,
+     duration-base, ease-signal, text-display, etc. utility classes */
+  --color-neo-blue: var(--neo-blue);
+  --color-neo-green: var(--neo-green);
+  --color-aurora-cyan: var(--aurora-cyan);
+  --color-aurora-sky: var(--aurora-sky);
+  --color-aurora-emerald: var(--aurora-emerald);
+  --color-aurora-violet: var(--aurora-violet);
+  --color-aurora-coral: var(--aurora-coral);
+  --color-aurora-navy: var(--aurora-navy);
+
+  --duration-fast: var(--duration-fast);
+  --duration-base: var(--duration-base);
+  --duration-slow: var(--duration-slow);
+  --ease-signal: var(--ease-signal);
+
+  --text-display: var(--text-display);
+  --text-section: var(--text-section);
+  --text-body-lg: var(--text-body-lg);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
@@ -196,5 +278,220 @@ body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
     font-weight: 500;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Aurora Signal — scoped surface themes.
+
+   Each scope overrides only the neutral background/surface/text tokens with a
+   chromatic Aurora tint at a different intensity, so Clerk, destructive
+   controls, charts, and per-organization widget branding keep working
+   unmodified. Apply the class to a layout root; do not use more than one
+   scope per subtree.
+---------------------------------------------------------------------------- */
+.marketing-aurora {
+  /* Light-forward, most vivid — the public marketing site. */
+  --background: oklch(0.975 0.02 195);
+  --foreground: oklch(0.22 0.045 250);
+  --card: oklch(0.99 0.012 205);
+  --card-foreground: oklch(0.22 0.045 250);
+  --popover: oklch(0.99 0.012 205);
+  --popover-foreground: oklch(0.22 0.045 250);
+  --muted: oklch(0.94 0.035 195);
+  --muted-foreground: oklch(0.42 0.03 235);
+  --accent: oklch(0.93 0.045 195);
+  --accent-foreground: oklch(0.22 0.045 250);
+  --border: oklch(0.88 0.035 205);
+  --input: oklch(0.93 0.03 200);
+  --ring: oklch(0.6 0.14 215);
+}
+
+.auth-aurora {
+  /* Sign-in / sign-up — marketing-adjacent, slightly calmer. */
+  --background: oklch(0.975 0.015 200);
+  --foreground: oklch(0.22 0.045 250);
+  --card: oklch(0.99 0.01 205);
+  --card-foreground: oklch(0.22 0.045 250);
+  --popover: oklch(0.99 0.01 205);
+  --muted: oklch(0.95 0.02 197);
+  --muted-foreground: oklch(0.44 0.025 235);
+  --border: oklch(0.89 0.03 205);
+  --input: oklch(0.94 0.025 200);
+  --ring: oklch(0.6 0.13 215);
+}
+
+.dashboard-aurora {
+  /* Authenticated app — low intensity, keeps data density/readability. */
+  --background: oklch(0.98 0.008 200);
+  --muted: oklch(0.95 0.012 195);
+  --accent: oklch(0.945 0.016 195);
+  --border: oklch(0.9 0.014 200);
+  --ring: oklch(0.6 0.1 215);
+}
+
+.widget-aurora {
+  /* Embedded chat widget — subtle tint; message-bubble colors are applied
+     per-component in the widget itself, not here. */
+  --background: oklch(0.98 0.01 200);
+  --muted: oklch(0.95 0.02 195);
+  --accent: oklch(0.94 0.025 197);
+  --border: oklch(0.9 0.02 200);
+  --ring: oklch(0.62 0.12 210);
+}
+
+/* ----------------------------------------------------------------------------
+   Landing / marketing utilities (used by the public landing page)
+---------------------------------------------------------------------------- */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Fine technical grid backdrop */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-fade {
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 0%,
+      #000 40%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 0%,
+      #000 40%,
+      transparent 100%
+    );
+  }
+  /* Subtle noise to kill banding on dark gradients */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Safe full-viewport height for the embedded widget: 100vh first so older
+     browsers/webviews without dvh support still get a real height, then
+     100dvh overrides it on everything that understands dynamic viewport
+     units (fixes the mobile browser URL-bar resize jump). Same rule, two
+     declarations, so cascade order is guaranteed regardless of utility
+     generation order. */
+  .h-dvh-safe {
+    height: 100vh;
+    height: 100dvh;
+  }
+  /* Safe-area padding for devices with a home indicator / notch. */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@keyframes helora-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@keyframes helora-float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-22px);
+  }
+}
+@keyframes helora-aurora {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6%, -4%, 0) scale(1.1);
+  }
+  66% {
+    transform: translate3d(-5%, 5%, 0) scale(0.95);
+  }
+}
+@keyframes helora-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes helora-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-helora-float {
+  animation: helora-float 6s ease-in-out infinite;
+}
+.animate-helora-float-slow {
+  animation: helora-float-slow 9s ease-in-out infinite;
+}
+.animate-helora-aurora {
+  animation: helora-aurora 18s ease-in-out infinite;
+}
+.animate-helora-marquee {
+  animation: helora-marquee 32s linear infinite;
+}
+/* Signature shimmer sweep for a single hero keyword */
+.text-shimmer {
+  background-image: linear-gradient(
+    110deg,
+    var(--color-violet-300, #c4b5fd) 25%,
+    #ffffff 45%,
+    var(--color-rose-300, #fda4af) 60%,
+    var(--color-violet-300, #c4b5fd) 80%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: helora-shimmer 5s linear infinite;
+}
+
+/* Aurora Signal gradient text — replaces the old violet/pink heading gradient
+   site-wide. Cyan -> emerald -> violet, using the darker "-text" tokens
+   (verified >=5.8:1 contrast against the marketing background, WCAG AA). */
+.text-gradient-aurora {
+  background-image: linear-gradient(
+    90deg,
+    var(--aurora-cyan-text),
+    var(--aurora-emerald-text) 45%,
+    var(--aurora-violet-text) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-helora-float,
+  .animate-helora-float-slow,
+  .animate-helora-aurora,
+  .animate-helora-marquee {
+    animation: none !important;
+  }
+  .text-shimmer {
+    animation: none !important;
+    color: var(--color-violet-200, #ddd6fe);
+    background-image: none;
   }
 }

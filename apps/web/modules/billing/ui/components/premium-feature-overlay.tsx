@@ -4,7 +4,6 @@ import {
   type LucideIcon,
   BookOpenIcon,
   BotIcon,
-  GemIcon,
   MicIcon,
   PaletteIcon,
   PhoneIcon,
@@ -19,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card";
+import { BrandMark } from "@/components/brand-mark";
 
 interface Feature {
   icon: LucideIcon;
@@ -34,7 +34,7 @@ const features: Feature[] = [
   {
     icon: BotIcon,
     label: "AI Customer Support",
-    description: "Intelligent automated responses 24/7", 
+    description: "Intelligent automated responses 24/7",
   },
   {
     icon: MicIcon,
@@ -52,12 +52,12 @@ const features: Feature[] = [
     description: "Train AI on your documentation",
   },
   {
-    icon: UsersIcon, 
+    icon: UsersIcon,
     label: "Team Access",
     description: "Up to 5 operators per organization",
   },
   {
-    icon: PaletteIcon, 
+    icon: PaletteIcon,
     label: "Widget Customization",
     description: "Customize your chat widget appearance",
   },
@@ -81,7 +81,7 @@ export const PremiumFeatureOverlay = ({
           <CardHeader className="text-center">
             <div className="flex items-center justify-center">
               <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border bg-muted">
-                <GemIcon className="size-6 text-muted-foreground" />
+                <BrandMark size={32} />
               </div>
             </div>
             <CardTitle className="text-xl">Premium Feature</CardTitle>
@@ -98,13 +98,16 @@ export const PremiumFeatureOverlay = ({
                     </div>
                     <div className="text-left">
                       <p className="font-medium text-sm">{feature.label}</p>
-                      <p className="text-muted-foreground text-xs">{feature.description}</p>
+                      <p className="text-muted-foreground text-xs">
+                        {feature.description}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
 
               <Button
+                variant="neo"
                 className="w-full"
                 onClick={() => router.push("/billing")}
                 size="lg"

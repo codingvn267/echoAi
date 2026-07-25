@@ -14,16 +14,16 @@ export function FinalCta() {
 
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto">
             Stop answering the same{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
+            <span className="text-gradient-aurora">
               support tickets
             </span>{" "}
             <em className="text-muted-foreground font-medium">over and over.</em>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Embed echoAi today. Let the AI handle the easy 90% so your team can focus on the 10% that matters.
+            Embed Helora today. Let the AI handle the easy 90% so your team can focus on the 10% that matters.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button asChild size="lg" className="rounded-full h-12 px-8 text-base shadow-xl shadow-primary/20">
+            <Button asChild size="lg" variant="neo" className="rounded-full h-12 px-8 text-base">
               <Link href="/sign-up">
                 Start free — no card needed
                 <ArrowRight className="h-4 w-4" />

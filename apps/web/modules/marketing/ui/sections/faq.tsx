@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: "Do I need a Vapi account for voice?",
-    a: "Yes. echoAi connects to your Vapi account, so you keep full control of your voice assistant, phone numbers and per-minute costs.",
+    a: "Yes. Helora connects to your Vapi account, so you keep full control of your voice assistant, phone numbers and per-minute costs.",
   },
   {
     q: "What happens when the AI can't answer?",
@@ -23,7 +23,7 @@ const FAQS = [
     a: "Yes. Each Clerk organization is fully isolated — its own widget settings, conversations, knowledge base and Vapi integration.",
   },
   {
-    q: "Is echoAi open source?",
+    q: "Is Helora open source?",
     a: "The repo is on GitHub. Self-host or use the hosted version — your call.",
   },
   {
@@ -41,7 +41,7 @@ export function Faq() {
             FAQ
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
-            Questions before you embed echoAi
+            Questions before you embed Helora
           </h2>
         </div>
 

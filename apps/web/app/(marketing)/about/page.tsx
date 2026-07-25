@@ -4,7 +4,7 @@ import { FinalCta } from "@/modules/marketing/ui/sections/final-cta";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "echoAi is an embeddable AI customer support agent — chat and voice in one widget — built so small teams can support customers 24/7.",
+    "Helora is an embeddable AI customer support agent — chat and voice in one widget — built so small teams can support customers 24/7.",
 };
 
 export default function AboutPage() {
@@ -17,7 +17,7 @@ export default function AboutPage() {
           </p>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">
             Built for teams who{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
+            <span className="text-gradient-aurora">
               hate repeat questions
             </span>
           </h1>
@@ -27,13 +27,13 @@ export default function AboutPage() {
       <section className="pb-24">
         <div className="mx-auto max-w-3xl px-4 prose prose-invert prose-lg leading-relaxed">
           <p className="text-lg text-muted-foreground">
-            echoAi started with a simple frustration: small teams spend half their day answering the
+            Helora started with a simple frustration: small teams spend half their day answering the
             same support questions over and over. We thought, what if an AI agent could read your
             knowledge base, talk to customers in chat <em>and</em> on the phone, and only escalate
             the cases that actually need a human?
           </p>
           <p className="mt-6 text-lg text-muted-foreground">
-            That's echoAi. One embeddable widget powered by Vapi for voice, Convex for realtime
+            That's Helora. One embeddable widget powered by Vapi for voice, Convex for realtime
             data, and Clerk for auth and multi-organization support. We obsess over making the
             handoff between AI and human invisible — your customers feel like they're getting
             instant, expert help no matter who (or what) is on the other end.

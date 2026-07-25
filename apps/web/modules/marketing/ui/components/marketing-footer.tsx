@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Github } from "lucide-react";
+import { BrandMark } from "@/components/brand-mark";
 
-const FOOTER_LINKS: { title: string; links: { label: string; href: string }[] }[] = [
+const FOOTER_LINKS: {
+  title: string;
+  links: { label: string; href: string }[];
+}[] = [
   {
     title: "Product",
     links: [
@@ -35,14 +39,12 @@ export function MarketingFooter() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 ring-1 ring-primary/30">
-                <span className="text-sm font-bold text-primary">e</span>
-              </span>
-              <span className="font-semibold tracking-tight">echoAi</span>
+              <BrandMark />
+              <span className="font-semibold tracking-tight">Helora</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm">
-              An embeddable AI agent for chat and voice support — so your team only
-              handles what truly needs a human.
+              An embeddable AI agent for chat and voice support — so your team
+              only handles what truly needs a human.
             </p>
             <a
               href="https://github.com/tbot6677028-beep/echoAi"
@@ -76,7 +78,7 @@ export function MarketingFooter() {
 
         <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} echoAi. All rights reserved.
+            © {new Date().getFullYear()} Helora. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
             Built with Next.js · Convex · Clerk · Vapi

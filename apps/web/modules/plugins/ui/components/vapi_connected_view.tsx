@@ -31,7 +31,7 @@ export const VapiConnectedView = ({ onDisconnect }: VapiConnectedViewProps) => {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <Image
                 alt="Vapi"
@@ -57,7 +57,7 @@ export const VapiConnectedView = ({ onDisconnect }: VapiConnectedViewProps) => {
 
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <div className="flex size-12 items-center justify-center rounded-lg border bg-muted">
                 <SettingsIcon className="size-6 text-muted-foreground" />

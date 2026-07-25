@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
-import { MeshBackground } from "../components/mesh-background";
+import { EchoSignalHero } from "../components/echo-signal-hero";
+import { HeroHeadlineEmphasis } from "../components/hero-headline-emphasis";
+import { MagneticWrapper } from "../components/magnetic-wrapper";
+import { TldrStrip } from "../components/tldr-strip";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      <MeshBackground />
+      <EchoSignalHero />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
@@ -21,24 +24,24 @@ export function Hero() {
           <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
             An AI agent that handles your
             <br className="hidden sm:block" />
-            <span className="bg-gradient-to-r from-primary via-violet-400 to-pink-400 bg-clip-text text-transparent">
-              chat and voice support
-            </span>
+            <HeroHeadlineEmphasis />
             <span className="text-muted-foreground italic font-medium"> — while you sleep.</span>
           </h1>
 
           <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Drop the echoAi widget on your site. It chats with visitors, answers calls in your
+            Drop the Helora widget on your site. It chats with visitors, answers calls in your
             voice, and quietly hands off to your team only when it really matters.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button asChild size="lg" className="rounded-full h-12 px-7 text-base shadow-lg shadow-primary/20">
-              <Link href="/sign-up">
-                <Sparkles className="h-4 w-4" />
-                Start free
-              </Link>
-            </Button>
+            <MagneticWrapper>
+              <Button asChild size="lg" variant="neo" className="rounded-full h-12 px-7 text-base">
+                <Link href="/sign-up">
+                  <Sparkles className="h-4 w-4" />
+                  Start free
+                </Link>
+              </Button>
+            </MagneticWrapper>
             <Button asChild size="lg" variant="ghost" className="rounded-full h-12 px-7 text-base">
               <Link href="#how">
                 See how it works
@@ -47,9 +50,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <p className="mt-6 text-sm text-muted-foreground">
-            No credit card · Embed in under 5 minutes · Chat + voice in one widget
-          </p>
+          <TldrStrip />
         </div>
 
         {/* Hero product card preview */}
@@ -62,7 +63,7 @@ export function Hero() {
                 <span className="h-3 w-3 rounded-full bg-red-400/70" />
                 <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
                 <span className="h-3 w-3 rounded-full bg-green-400/70" />
-                <span className="ml-3 text-xs text-muted-foreground">app.echoai.app/conversations</span>
+                <span className="ml-3 text-xs text-muted-foreground">app.helora.ai/conversations</span>
               </div>
 
               <div className="grid sm:grid-cols-[260px_1fr] min-h-[380px]">

@@ -7,6 +7,9 @@ import { escalateConversation } from "../system/ai/tools/escalateConversation.js
 import { resolveConversation } from "../system/ai/tools/resolveConversation.js";
 import { saveMessage } from "@convex-dev/agent";
 import { search } from "../system/ai/tools/search.js";
+import { captureLead } from "../system/ai/tools/captureLead.js";
+import { checkAvailability } from "../system/ai/tools/checkAvailability.js";
+import { bookAppointment } from "../system/ai/tools/bookAppointment.js";
 
 export const create = action({
   args: {
@@ -15,62 +18,58 @@ export const create = action({
     contactSessionId: v.id("contactSessions"),
   },
   handler: async (ctx, args) => {
-    const contactSession = await ctx.runQuery(
-      internal.system.contactSessions.getOne,
+    const prompt = args.prompt.trim();
+    const reservation = await ctx.runMutation(
+      internal.system.usage.reserveMessage,
       {
         contactSessionId: args.contactSessionId,
-      }
-    );
-
-    if (!contactSession || contactSession.expiresAt < Date.now()) {
-      throw new ConvexError({
-        code: "UNAUTHORIZED",
-        message: "Invalid Session",
-      });
-    }
-
-    const conversation = await ctx.runQuery(
-      internal.system.conversations.getByThreadId,
-      {
         threadId: args.threadId,
+        promptCharacters: prompt.length,
       }
     );
 
-    if (!conversation) {
-      throw new ConvexError({
-        code: "NOT_FOUND",
-        message: "Conversation not found",
+    try {
+      await ctx.runMutation(internal.system.contactSessions.refresh, {
+        contactSessionId: args.contactSessionId,
       });
-    }
 
-    if (conversation.status === "resolved") {
-      throw new ConvexError({
-        code: "BAD_REQUEST",
-        message: "Conversation resolved",
-      });
-    }
-
-    // TODO : Implement subscription check
-
-    const shouldTriggerAgent = conversation.status === "unresolved";
-    if (shouldTriggerAgent) {
-      await supportAgent.generateText(
-        ctx,
-        { threadId: args.threadId },
-        {
-          prompt: args.prompt,
-          tools: {
-            escalateConversation,
-            resolveConversation,
-            search,
+      if (reservation.shouldTriggerAgent) {
+        await supportAgent.generateText(
+          ctx,
+          {
+            threadId: args.threadId,
+            usageHandler: async (usageCtx, usageArgs) => {
+              await usageCtx.runMutation(internal.system.usage.recordTokens, {
+                organizationId: reservation.conversation.organizationId,
+                inputTokens: usageArgs.usage.promptTokens,
+                outputTokens: usageArgs.usage.completionTokens,
+                model: usageArgs.model,
+              });
+            },
           },
-        }
-      );
-    } else {
-      await saveMessage (ctx, components.agent, {
-        threadId: args.threadId,
-        prompt: args.prompt
-      })
+          {
+            prompt,
+            maxTokens: 2_000,
+            tools: {
+              escalateConversation,
+              resolveConversation,
+              search,
+              captureLead,
+              checkAvailability,
+              bookAppointment,
+            },
+          }
+        );
+      } else {
+        await saveMessage(ctx, components.agent, {
+          threadId: args.threadId,
+          prompt,
+        });
+      }
+    } finally {
+      await ctx.runMutation(internal.system.usage.releaseMessage, {
+        reservationId: reservation.reservationId,
+      });
     }
   },
 });
@@ -89,6 +88,27 @@ export const getMany = query({
       throw new ConvexError({
         code: "UNAUTHORIZED",
         message: "Invalid session",
+      });
+    }
+
+    const conversation = await ctx.runQuery(
+      internal.system.conversations.getByThreadId,
+      {
+        threadId: args.threadId,
+      }
+    );
+
+    if (!conversation) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Conversation not found",
+      });
+    }
+
+    if (conversation.contactSessionId !== contactSession._id) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Incorrect session",
       });
     }
 

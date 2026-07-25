@@ -1,4 +1,4 @@
-import { VapiClient, Vapi } from "@vapi-ai/server-sdk";
+import { VapiClient, type Vapi } from "@vapi-ai/server-sdk";
 import { internal } from "../_generated/api.js";
 import { action } from "../_generated/server.js";
 import { getSecretValue, parseSecretString } from "../lib/secrets.js";
@@ -7,7 +7,7 @@ import { ConvexError } from "convex/values";
 // 4.04.06
 export const getAssistants = action({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<Vapi.Assistant[]> => {
     const identity = await ctx.auth.getUserIdentity();
     if (identity === null) {
       throw new ConvexError({
@@ -72,7 +72,7 @@ export const getAssistants = action({
 
 export const getPhoneNumbers = action({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<Vapi.ListPhoneNumbersResponseItem[]> => {
     const identity = await ctx.auth.getUserIdentity();
     if (identity === null) {
       throw new ConvexError({

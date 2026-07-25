@@ -2,6 +2,7 @@ import { v } from "convex/values";
 import { internal } from "../_generated/api.js";
 import { internalAction } from "../_generated/server.js";
 import { upsertSecret } from "../lib/secrets.js";
+import { deleteSecret } from "../lib/secrets.js";
 
 export const upsert = internalAction({
   args: {
@@ -17,6 +18,16 @@ export const upsert = internalAction({
       secretName,
       organizationId: args.organizationId,
     });
+    return { status: "success" };
+  },
+});
+
+export const remove = internalAction({
+  args: {
+    secretName: v.string(),
+  },
+  handler: async (_ctx, args) => {
+    await deleteSecret(args.secretName);
     return { status: "success" };
   },
 });

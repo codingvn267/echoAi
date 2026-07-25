@@ -43,6 +43,8 @@ import {
 import { Form, FormField } from "@workspace/ui/components/form";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { useMemo } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { useNewMessageIds } from "../../hooks/use-new-message-ids";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
@@ -104,6 +106,13 @@ export const WidgetChatScreen = () => {
       loadSize: 10,
     });
 
+  const uiMessages = useMemo(
+    () => toUIMessages(messages.results ?? []) ?? [],
+    [messages.results]
+  );
+  const isNewMessage = useNewMessageIds(uiMessages.map((message) => message.id));
+  const reduceMotion = useReducedMotion();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -147,31 +156,39 @@ export const WidgetChatScreen = () => {
             onLoadMore={handleLoadMore}
             ref={topElementRef}
           />
-          {toUIMessages(messages.results ?? [])?.map((message) => {
+          {uiMessages.map((message) => {
             return (
-              <AIMessage
-                from={message.role === "user" ? "user" : "assistant"}
+              <motion.div
                 key={message.id}
+                initial={
+                  reduceMotion || !isNewMessage(message.id)
+                    ? false
+                    : { opacity: 0, y: 8 }
+                }
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
-                <AIMessageContent>
-                  <AIResponse>{message.content}</AIResponse>
-                </AIMessageContent>
-                {message.role === "assistant" && (
-                  <DicebearAvatar
-                    className="bg-muted"
-                    imageClassName="object-contain p-1"
-                    imageUrl="/logo.svg"
-                    seed="assistant"
-                    size={32}
-                  />
-                )}
-              </AIMessage>
+                <AIMessage from={message.role === "user" ? "user" : "assistant"}>
+                  <AIMessageContent className="group-[.is-assistant]:bg-[oklch(0.97_0.025_195)] group-[.is-assistant]:border-[oklch(0.9_0.03_200)] group-[.is-user]:bg-none group-[.is-user]:bg-[oklch(0.93_0.035_296)] group-[.is-user]:border-transparent group-[.is-user]:text-aurora-navy">
+                    <AIResponse>{message.content}</AIResponse>
+                  </AIMessageContent>
+                  {message.role === "assistant" && (
+                    <DicebearAvatar
+                      className="bg-muted"
+                      imageClassName="object-contain p-1"
+                      imageUrl="/logo.svg"
+                      seed="assistant"
+                      size={32}
+                    />
+                  )}
+                </AIMessage>
+              </motion.div>
             );
           })}
         </AIConversationContent>
         <AIConversationScrollButton />
       </AIConversation>
-      {toUIMessages(messages.results ?? [])?.length === 1 && (
+      {uiMessages.length === 1 && (
         <AISuggestions className="flex w-full flex-col items-end p-2">
           {suggestions.map((suggestion) => {
             if (!suggestion) {
@@ -198,7 +215,7 @@ export const WidgetChatScreen = () => {
       <div>
         <Form {...form}>
           <AIInput
-            className="rounded-none border-x-0 border-b-0"
+            className="rounded-none border-x-0 border-b-0 bg-[oklch(0.99_0.012_205)]"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
@@ -227,6 +244,7 @@ export const WidgetChatScreen = () => {
             <AIInputToolbar>
               <AIInputTools />
               <AIInputSubmit
+                variant="neo"
                 disabled={
                   conversation?.status === "resolved" ||
                   !form.formState.isValid ||

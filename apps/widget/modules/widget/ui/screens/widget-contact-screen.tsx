@@ -19,7 +19,7 @@ export const WidgetContactScreen = () => {
       return;
     }
 
-    try{
+    try {
       await navigator.clipboard.writeText(phoneNumber);
       setCopied(true);
     } catch (error) {
@@ -56,7 +56,7 @@ export const WidgetContactScreen = () => {
             className="w-full"
             onClick={handleCopy}
             size="lg"
-            variant="outline"
+            variant="neo"
           >
             {copied ? (
               <>
@@ -68,8 +68,7 @@ export const WidgetContactScreen = () => {
                 <CopyIcon className="mr-2 size-4" />
                 Copy Number
               </>
-            )
-          }
+            )}
           </Button>
           <Button asChild className="w-full" size="lg">
             <Link href={`tel:${phoneNumber}`}>

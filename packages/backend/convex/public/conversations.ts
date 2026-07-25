@@ -4,6 +4,7 @@ import { supportAgent } from "../system/ai/agents/supportAgent.js";
 import { MessageDoc, saveMessage } from "@convex-dev/agent";
 import { components } from "../_generated/api.js";
 import { paginationOptsValidator } from "convex/server";
+import { consumeRateLimit } from "../lib/rateLimit.js";
 
 export const getMany = query({
   args: {
@@ -112,12 +113,30 @@ export const create = mutation({
       });
     }
 
+    if (session.organizationId !== args.organizationId) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Incorrect session",
+      });
+    }
+
+    await consumeRateLimit(ctx, {
+      key: `conversation:session:${session._id}`,
+      limit: 10,
+      windowMs: 60 * 60 * 1000,
+    });
+    await consumeRateLimit(ctx, {
+      key: `conversation:organization:${args.organizationId}`,
+      limit: 30,
+      windowMs: 60 * 60 * 1000,
+    });
+
     const widgetSettings = await ctx.db
       .query("widgetSettings")
-      .withIndex("by_organization_id", (q) => 
-        q.eq("organizationId", args.organizationId),
-    )
-    .unique();
+      .withIndex("by_organization_id", (q) =>
+        q.eq("organizationId", args.organizationId)
+      )
+      .unique();
 
     const { threadId } = await supportAgent.createThread(ctx, {
       userId: args.organizationId,
@@ -127,7 +146,8 @@ export const create = mutation({
       threadId,
       message: {
         role: "assistant",
-        content: widgetSettings?.greetMessage || "Hello, how can I help you today?",
+        content:
+          widgetSettings?.greetMessage || "Hello, how can I help you today?",
       },
     });
 

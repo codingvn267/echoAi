@@ -10,12 +10,14 @@ interface UseVapiAssistantsResult {
   data: Assistants;
   isLoading: boolean;
   error: Error | null;
+  retry: () => void;
 }
 
 export const useVapiAssistants = (): UseVapiAssistantsResult => {
   const [data, setData] = useState<Assistants>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [requestId, setRequestId] = useState(0);
 
   const getAssistants = useAction(api.private.vapi.getAssistants);
 
@@ -49,21 +51,28 @@ export const useVapiAssistants = (): UseVapiAssistantsResult => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [getAssistants, requestId]);
 
-  return { data, isLoading, error };
+  return {
+    data,
+    isLoading,
+    error,
+    retry: () => setRequestId((current) => current + 1),
+  };
 };
 
 interface UseVapiPhoneNumbersResult {
   data: PhoneNumbers;
   isLoading: boolean;
   error: Error | null;
+  retry: () => void;
 }
 
 export const useVapiPhoneNumbers = (): UseVapiPhoneNumbersResult => {
   const [data, setData] = useState<PhoneNumbers>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [requestId, setRequestId] = useState(0);
 
   const getPhoneNumbers = useAction(api.private.vapi.getPhoneNumbers);
 
@@ -96,7 +105,12 @@ export const useVapiPhoneNumbers = (): UseVapiPhoneNumbersResult => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [getPhoneNumbers, requestId]);
 
-  return { data, isLoading, error };
+  return {
+    data,
+    isLoading,
+    error,
+    retry: () => setRequestId((current) => current + 1),
+  };
 };

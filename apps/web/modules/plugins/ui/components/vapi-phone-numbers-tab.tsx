@@ -1,8 +1,13 @@
 "use client";
 
-import { CheckCircleIcon, PhoneIcon, XCircleIcon } from "lucide-react";
-import { toast } from "sonner";
+import {
+  CheckCircleIcon,
+  PhoneIcon,
+  RefreshCwIcon,
+  XCircleIcon,
+} from "lucide-react";
 import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
 import {
   Table,
   TableBody,
@@ -14,7 +19,7 @@ import {
 import { useVapiPhoneNumbers } from "../../hooks/use-vapi-data";
 
 export const VapiPhoneNumbersTab = () => {
-  const { data: phoneNumbers, isLoading } = useVapiPhoneNumbers();
+  const { data: phoneNumbers, error, isLoading, retry } = useVapiPhoneNumbers();
 
   return (
     <div className="border-t bg-background">
@@ -36,6 +41,26 @@ export const VapiPhoneNumbersTab = () => {
                     className="px-6 py-8 text-center text-muted-foreground"
                   >
                     Loading phone numbers...
+                  </TableCell>
+                </TableRow>
+              );
+            }
+            if (error) {
+              return (
+                <TableRow>
+                  <TableCell colSpan={3} className="px-6 py-8 text-center">
+                    <p className="text-sm text-muted-foreground">
+                      Could not load phone numbers from Vapi.
+                    </p>
+                    <Button
+                      className="mt-3"
+                      onClick={retry}
+                      size="sm"
+                      variant="neo"
+                    >
+                      <RefreshCwIcon />
+                      Try again
+                    </Button>
                   </TableCell>
                 </TableRow>
               );

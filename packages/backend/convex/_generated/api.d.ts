@@ -8,13 +8,21 @@
  * @module
  */
 
+import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as lib_extractTextContent from "../lib/extractTextContent.js";
+import type * as lib_fileValidation from "../lib/fileValidation.js";
+import type * as lib_proxyAuth from "../lib/proxyAuth.js";
+import type * as lib_rateLimit from "../lib/rateLimit.js";
 import type * as lib_secrets from "../lib/secrets.js";
+import type * as lib_webhookAuth from "../lib/webhookAuth.js";
+import type * as private_appointments from "../private/appointments.js";
+import type * as private_bookingSettings from "../private/bookingSettings.js";
 import type * as private_contactSessions from "../private/contactSessions.js";
 import type * as private_conversations from "../private/conversations.js";
 import type * as private_files from "../private/files.js";
 import type * as private_messages from "../private/messages.js";
+import type * as private_organization from "../private/organization.js";
 import type * as private_plugins from "../private/plugins.js";
 import type * as private_secrets from "../private/secrets.js";
 import type * as private_vapi from "../private/vapi.js";
@@ -27,16 +35,32 @@ import type * as public_secrets from "../public/secrets.js";
 import type * as public_widgetSettings from "../public/widgetSettings.js";
 import type * as system_ai_agents_supportAgent from "../system/ai/agents/supportAgent.js";
 import type * as system_ai_constants from "../system/ai/constants.js";
+import type * as system_ai_lib_availability from "../system/ai/lib/availability.js";
 import type * as system_ai_rag from "../system/ai/rag.js";
+import type * as system_ai_tools_bookAppointment from "../system/ai/tools/bookAppointment.js";
+import type * as system_ai_tools_captureLead from "../system/ai/tools/captureLead.js";
+import type * as system_ai_tools_checkAvailability from "../system/ai/tools/checkAvailability.js";
 import type * as system_ai_tools_escalateConversation from "../system/ai/tools/escalateConversation.js";
 import type * as system_ai_tools_resolveConversation from "../system/ai/tools/resolveConversation.js";
 import type * as system_ai_tools_search from "../system/ai/tools/search.js";
+import type * as system_appointments from "../system/appointments.js";
+import type * as system_bookingSettings from "../system/bookingSettings.js";
 import type * as system_contactSessions from "../system/contactSessions.js";
 import type * as system_conversations from "../system/conversations.js";
+import type * as system_fileQuotas from "../system/fileQuotas.js";
+import type * as system_leads from "../system/leads.js";
+import type * as system_migrations from "../system/migrations.js";
+import type * as system_notifications from "../system/notifications.js";
+import type * as system_organizationData from "../system/organizationData.js";
 import type * as system_plugins from "../system/plugins.js";
+import type * as system_rateLimits from "../system/rateLimits.js";
+import type * as system_reconciliation from "../system/reconciliation.js";
+import type * as system_retention from "../system/retention.js";
 import type * as system_secrets from "../system/secrets.js";
 import type * as system_subscriptions from "../system/subscriptions.js";
-import type * as users from "../users.js";
+import type * as system_usage from "../system/usage.js";
+import type * as system_webhookEvents from "../system/webhookEvents.js";
+import type * as system_widgetSettings from "../system/widgetSettings.js";
 
 import type {
   ApiFromModules,
@@ -45,13 +69,21 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  crons: typeof crons;
   http: typeof http;
   "lib/extractTextContent": typeof lib_extractTextContent;
+  "lib/fileValidation": typeof lib_fileValidation;
+  "lib/proxyAuth": typeof lib_proxyAuth;
+  "lib/rateLimit": typeof lib_rateLimit;
   "lib/secrets": typeof lib_secrets;
+  "lib/webhookAuth": typeof lib_webhookAuth;
+  "private/appointments": typeof private_appointments;
+  "private/bookingSettings": typeof private_bookingSettings;
   "private/contactSessions": typeof private_contactSessions;
   "private/conversations": typeof private_conversations;
   "private/files": typeof private_files;
   "private/messages": typeof private_messages;
+  "private/organization": typeof private_organization;
   "private/plugins": typeof private_plugins;
   "private/secrets": typeof private_secrets;
   "private/vapi": typeof private_vapi;
@@ -64,16 +96,32 @@ declare const fullApi: ApiFromModules<{
   "public/widgetSettings": typeof public_widgetSettings;
   "system/ai/agents/supportAgent": typeof system_ai_agents_supportAgent;
   "system/ai/constants": typeof system_ai_constants;
+  "system/ai/lib/availability": typeof system_ai_lib_availability;
   "system/ai/rag": typeof system_ai_rag;
+  "system/ai/tools/bookAppointment": typeof system_ai_tools_bookAppointment;
+  "system/ai/tools/captureLead": typeof system_ai_tools_captureLead;
+  "system/ai/tools/checkAvailability": typeof system_ai_tools_checkAvailability;
   "system/ai/tools/escalateConversation": typeof system_ai_tools_escalateConversation;
   "system/ai/tools/resolveConversation": typeof system_ai_tools_resolveConversation;
   "system/ai/tools/search": typeof system_ai_tools_search;
+  "system/appointments": typeof system_appointments;
+  "system/bookingSettings": typeof system_bookingSettings;
   "system/contactSessions": typeof system_contactSessions;
   "system/conversations": typeof system_conversations;
+  "system/fileQuotas": typeof system_fileQuotas;
+  "system/leads": typeof system_leads;
+  "system/migrations": typeof system_migrations;
+  "system/notifications": typeof system_notifications;
+  "system/organizationData": typeof system_organizationData;
   "system/plugins": typeof system_plugins;
+  "system/rateLimits": typeof system_rateLimits;
+  "system/reconciliation": typeof system_reconciliation;
+  "system/retention": typeof system_retention;
   "system/secrets": typeof system_secrets;
   "system/subscriptions": typeof system_subscriptions;
-  users: typeof users;
+  "system/usage": typeof system_usage;
+  "system/webhookEvents": typeof system_webhookEvents;
+  "system/widgetSettings": typeof system_widgetSettings;
 }>;
 
 /**

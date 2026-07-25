@@ -193,7 +193,7 @@ export const CustomizationForm = ({
         )}
 
         <div className="flex justify-end">
-          <Button disabled={form.formState.isSubmitting} type="submit">
+          <Button variant="neo" disabled={form.formState.isSubmitting} type="submit">
             Save Settings
           </Button>
         </div>

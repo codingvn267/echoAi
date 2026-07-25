@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowLeftRightIcon, type LucideIcon, PlugIcon } from "lucide-react";
+import { ArrowLeftRightIcon, type LucideIcon, PlugIcon } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@workspace/ui/components/button";
 
@@ -6,7 +6,7 @@ export interface Feature {
   icon: LucideIcon;
   label: string;
   description: string;
-};
+}
 
 interface PluginCardProps {
   isDisabled?: boolean;
@@ -14,7 +14,7 @@ interface PluginCardProps {
   serviceImage: string;
   features: Feature[];
   onSubmit: () => void;
-};
+}
 
 export const PluginCard = ({
   isDisabled,
@@ -50,9 +50,7 @@ export const PluginCard = ({
       </div>
 
       <div className="mb-6 text-center">
-        <p className="text-lg">
-            Connect your {serviceName} account
-        </p>
+        <p className="text-lg">Connect your {serviceName} account</p>
       </div>
 
       <div className="mb-6">
@@ -60,11 +58,13 @@ export const PluginCard = ({
           {features.map((feature) => (
             <div className="flex items-center gap-3" key={feature.label}>
               <div className="flex size-8 items-center justify-center rounded-lg border bg-muted">
-                <feature.icon className="size-4 text-muted-foreground"/>
+                <feature.icon className="size-4 text-muted-foreground" />
               </div>
               <div>
                 <div className="font-medium text-sm">{feature.label}</div>
-                <div className="text-muted-foreground text-xs">{feature.description}</div>
+                <div className="text-muted-foreground text-xs">
+                  {feature.description}
+                </div>
               </div>
             </div>
           ))}
@@ -73,18 +73,15 @@ export const PluginCard = ({
 
       <div className="text-center">
         <Button
-          className="size-full"
+          className="w-full"
           disabled={isDisabled}
           onClick={onSubmit}
           variant="default"
         >
           Connect
-          <PlugIcon/>
+          <PlugIcon />
         </Button>
       </div>
-
     </div>
-  )
-}
-
-
+  );
+};

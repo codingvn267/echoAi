@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 const TESTIMONIALS = [
   {
     quote:
-      "We replaced our $400/mo support tool with echoAi in a weekend. The voice + chat in one widget is exactly what we needed.",
+      "We replaced our $400/mo support tool with Helora in a weekend. The voice + chat in one widget is exactly what we needed.",
     author: "Priya N.",
     role: "Founder, Linewise",
   },
@@ -15,7 +15,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "Multi-org was the killer feature for us. We run echoAi for 7 different client brands from one dashboard.",
+      "Multi-org was the killer feature for us. We run Helora for 7 different client brands from one dashboard.",
     author: "Sofia A.",
     role: "Agency owner, Brightline",
   },
@@ -31,8 +31,8 @@ export function Testimonials() {
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Teams ship faster with{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
-              echoAi answering first
+            <span className="text-gradient-aurora">
+              Helora answering first
             </span>
           </h2>
         </div>

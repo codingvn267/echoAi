@@ -1,6 +1,6 @@
 import { createTool, saveMessage } from "@convex-dev/agent";
 import z from "zod";
-import { internal } from "@workspace/backend/_generated/api.js";
+import { internal } from "../../../_generated/api.js";
 import { supportAgent } from "../agents/supportAgent.js";
 
 export const escalateConversation = createTool({
@@ -19,8 +19,8 @@ export const escalateConversation = createTool({
       threadId: ctx.threadId,
       message: {
         role: "assistant",
-        content: "Conversation escalated to a human operator."
-      }
+        content: "Conversation escalated to a human operator.",
+      },
     });
 
     return "Conversation escalated to a human operator";

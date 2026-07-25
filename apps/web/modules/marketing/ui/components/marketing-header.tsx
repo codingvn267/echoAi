@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import { BrandMark } from "@/components/brand-mark";
 
 const NAV_LINKS = [
   { label: "Features", href: "/#features" },
@@ -31,16 +32,13 @@ export function MarketingHeader() {
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
           ? "border-b border-border/60 bg-background/70 backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent",
+          : "border-b border-transparent bg-transparent"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 ring-1 ring-primary/30">
-            <span className="absolute inset-0 rounded-lg bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="relative text-sm font-bold text-primary">e</span>
-          </span>
-          <span className="font-semibold tracking-tight">echoAi</span>
+          <BrandMark className="transition-transform duration-300 group-hover:scale-105" />
+          <span className="font-semibold tracking-tight">Helora</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
@@ -92,10 +90,14 @@ export function MarketingHeader() {
             ))}
             <div className="mt-2 flex gap-2 pt-2 border-t border-border/60">
               <Button asChild variant="outline" className="flex-1">
-                <Link href="/sign-in" onClick={() => setOpen(false)}>Sign in</Link>
+                <Link href="/sign-in" onClick={() => setOpen(false)}>
+                  Sign in
+                </Link>
               </Button>
               <Button asChild className="flex-1">
-                <Link href="/sign-up" onClick={() => setOpen(false)}>Start free</Link>
+                <Link href="/sign-up" onClick={() => setOpen(false)}>
+                  Start free
+                </Link>
               </Button>
             </div>
           </div>

@@ -3,7 +3,12 @@
 import { Button } from "@workspace/ui/components/button";
 import { WidgetHeader } from "../components/widget-header";
 import { WidgetFooter } from "../components/widget-footer";
-import { ChevronRightIcon, MessageSquareTextIcon, MicIcon, PhoneIcon } from "lucide-react";
+import {
+  ChevronRightIcon,
+  MessageSquareTextIcon,
+  MicIcon,
+  PhoneIcon,
+} from "lucide-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   contactSessionIdAtomFamily,
@@ -12,7 +17,7 @@ import {
   screenAtom,
   conversationIdAtom,
   widgetSettingsAtom,
-  hasVapiSecretAtom
+  hasVapiSecretAtom,
 } from "../../atoms/widget_atoms";
 import { useMutation } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
@@ -33,7 +38,6 @@ export const WidgetSelectionScreen = () => {
   const [isPending, setIsPending] = useState(false);
 
   const handleNewConversation = async () => {
-    
     if (!organizationId) {
       setScreen("error");
       setErrorMessage("Missing Organization ID");
@@ -72,7 +76,7 @@ export const WidgetSelectionScreen = () => {
       <div className="flex flex-1 flex-col gap-y-4 p-4 overflow-auto">
         <Button
           className="h-16 w-full justify-between"
-          variant="outline"
+          variant="neo"
           onClick={handleNewConversation}
           disabled={isPending}
         >
@@ -84,34 +88,34 @@ export const WidgetSelectionScreen = () => {
         </Button>
         {hasVapiSecrets && widgetSettings?.vapiSettings?.assistantId && (
           <Button
-          className="h-16 w-full justify-between"
-          variant="outline"
-          onClick={() => setScreen("voice")}
-          disabled={isPending}
-        >
-          <div className="flex items-center gap-x-2">
-            <MicIcon className="size-4" />
-            <span>Start voice call</span>
-          </div>
-          <ChevronRightIcon />
-        </Button>
+            className="h-16 w-full justify-between"
+            variant="neo"
+            onClick={() => setScreen("voice")}
+            disabled={isPending}
+          >
+            <div className="flex items-center gap-x-2">
+              <MicIcon className="size-4" />
+              <span>Start voice call</span>
+            </div>
+            <ChevronRightIcon />
+          </Button>
         )}
         {hasVapiSecrets && widgetSettings?.vapiSettings?.phoneNumber && (
           <Button
-          className="h-16 w-full justify-between"
-          variant="outline"
-          onClick={() => setScreen("contact")}
-          disabled={isPending}
-        >
-          <div className="flex items-center gap-x-2">
-            <PhoneIcon className="size-4" />
-            <span>Call us</span>
-          </div>
-          <ChevronRightIcon />
-        </Button>
+            className="h-16 w-full justify-between"
+            variant="neo"
+            onClick={() => setScreen("contact")}
+            disabled={isPending}
+          >
+            <div className="flex items-center gap-x-2">
+              <PhoneIcon className="size-4" />
+              <span>Call us</span>
+            </div>
+            <ChevronRightIcon />
+          </Button>
         )}
       </div>
-      <WidgetFooter/>
+      <WidgetFooter />
     </>
   );
 };

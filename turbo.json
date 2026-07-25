@@ -1,14 +1,32 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
+  "ui": "stream",
+  "globalEnv": [
+    "NODE_ENV",
+    "TURNSTILE_SECRET_KEY",
+    "WIDGET_ALLOWED_ORIGINS",
+    "WIDGET_PROXY_SECRET"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**" ]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "NODE_ENV",
+        "TURNSTILE_SECRET_KEY",
+        "WIDGET_ALLOWED_ORIGINS",
+        "WIDGET_PROXY_SECRET"
+      ]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "env": [
+        "NODE_ENV",
+        "TURNSTILE_SECRET_KEY",
+        "WIDGET_ALLOWED_ORIGINS",
+        "WIDGET_PROXY_SECRET"
+      ]
     },
     "check-types": {
       "dependsOn": ["^check-types"]

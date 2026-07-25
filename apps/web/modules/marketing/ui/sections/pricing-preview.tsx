@@ -1,59 +1,7 @@
 import Link from "next/link";
 import { Check, Sparkles } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
-
-const TIERS = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Try echoAi on a small project or staging site.",
-    features: [
-      "100 AI conversations / month",
-      "Chat widget on 1 site",
-      "Knowledge base (10 documents)",
-      "1 organization · 1 seat",
-      "Community support",
-    ],
-    cta: "Start free",
-    href: "/sign-up",
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    price: "$29",
-    period: "per month",
-    description: "For teams shipping AI customer support to production.",
-    features: [
-      "Up to 1,000 AI conversations / month",
-      "Chat + voice widget on 1 site",
-      "Knowledge base (50 documents)",
-      "1 organization · 5 seats",
-      "Vapi voice integration",
-      "Email support",
-    ],
-    cta: "Start 14-day trial",
-    href: "/sign-up",
-    highlighted: true,
-  },
-  {
-    name: "Scale",
-    price: "Custom",
-    period: "talk to us",
-    description: "Multi-brand teams, agencies, and high-volume workloads.",
-    features: [
-      "Unlimited AI conversations",
-      "Multiple sites + brands",
-      "Unlimited knowledge base",
-      "Multi-organization · unlimited seats",
-      "SSO + audit logs",
-      "Priority support + SLA",
-    ],
-    cta: "Contact sales",
-    href: "mailto:hello@echoai.app?subject=Scale%20plan",
-    highlighted: false,
-  },
-];
+import { HELORA_PLANS } from "@/modules/billing/constants";
 
 export function PricingPreview() {
   return (
@@ -65,7 +13,7 @@ export function PricingPreview() {
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Simple pricing,{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
+            <span className="text-gradient-aurora">
               built to scale with you
             </span>
           </h2>
@@ -75,7 +23,7 @@ export function PricingPreview() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
-          {TIERS.map((tier) => (
+          {HELORA_PLANS.map((tier) => (
             <div
               key={tier.name}
               className={`relative rounded-2xl border p-8 backdrop-blur ${
@@ -95,22 +43,27 @@ export function PricingPreview() {
 
               <h3 className="text-lg font-semibold">{tier.name}</h3>
               <div className="mt-4 flex items-baseline gap-1.5">
-                <span className="text-5xl font-bold tracking-tight">{tier.price}</span>
-                <span className="text-sm text-muted-foreground">/{tier.period}</span>
+                <span className="text-5xl font-bold tracking-tight">
+                  {tier.price}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  /{tier.period}
+                </span>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{tier.description}</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                {tier.description}
+              </p>
 
-              <Button
-                asChild
-                className={`mt-6 w-full ${tier.highlighted ? "" : "bg-foreground text-background hover:bg-foreground/90"}`}
-                size="lg"
-              >
+              <Button asChild className="mt-6 w-full" size="lg" variant="neo">
                 <Link href={tier.href}>{tier.cta}</Link>
               </Button>
 
               <ul className="mt-8 space-y-3">
                 {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2.5 text-sm">
+                  <li
+                    key={feature}
+                    className="flex items-start gap-2.5 text-sm"
+                  >
                     <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
                     <span className="text-muted-foreground">{feature}</span>
                   </li>
@@ -122,7 +75,10 @@ export function PricingPreview() {
 
         <p className="mt-10 text-center text-sm text-muted-foreground">
           Need to compare plans in detail?{" "}
-          <Link href="/pricing" className="text-foreground font-medium hover:text-primary underline-offset-4 hover:underline">
+          <Link
+            href="/pricing"
+            className="text-foreground font-medium hover:text-primary underline-offset-4 hover:underline"
+          >
             See full pricing →
           </Link>
         </p>

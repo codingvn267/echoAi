@@ -118,8 +118,8 @@ export const DashboardSidebar = () => {
                     isActive={isActive(item.url)}
                     className={cn(
                       isActive(item.url)
-                        ? "bg-gradient-to-b from-[#7dd3e4] to-[#c4eef5]! hover:brightness-95"
-                        : "hover:bg-[#e8f9fc]!"
+                        ? "bg-gradient-to-b from-aurora-cyan to-aurora-emerald! hover:brightness-95"
+                        : "hover:bg-accent!"
                     )}
                     tooltip={item.title}
                   >
@@ -145,8 +145,8 @@ export const DashboardSidebar = () => {
                     isActive={isActive(item.url)}
                     className={cn(
                       isActive(item.url)
-                        ? "bg-gradient-to-b from-[#7dd3e4] to-[#c4eef5]! hover:brightness-95"
-                        : "hover:bg-[#e8f9fc]!"
+                        ? "bg-gradient-to-b from-aurora-cyan to-aurora-emerald! hover:brightness-95"
+                        : "hover:bg-accent!"
                     )}
                   >
                     <Link href={item.url}>
@@ -171,8 +171,8 @@ export const DashboardSidebar = () => {
                     isActive={isActive(item.url)}
                     className={cn(
                       isActive(item.url)
-                        ? "bg-gradient-to-b from-[#7dd3e4] to-[#c4eef5]! hover:brightness-95"
-                        : "hover:bg-[#e8f9fc]!"
+                        ? "bg-gradient-to-b from-aurora-cyan to-aurora-emerald! hover:brightness-95"
+                        : "hover:bg-accent!"
                     )}
                     tooltip={item.title}
                   >

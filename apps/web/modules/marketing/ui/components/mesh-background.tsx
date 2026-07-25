@@ -7,14 +7,14 @@ export function MeshBackground() {
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
     >
       {/* Top grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(125,211,228,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,228,0.08)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(6,182,212,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(6,182,212,0.08)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
 
-      {/* Soft glowing blobs */}
+      {/* Soft glowing blobs — Aurora Signal palette (cyan / emerald / violet) */}
       <div
         className="absolute -top-32 -left-32 h-[40rem] w-[40rem] rounded-full opacity-40 blur-3xl animate-blob"
         style={{
           background:
-            "radial-gradient(circle at 30% 30%, #7dd3e4 0%, transparent 60%)",
+            "radial-gradient(circle at 30% 30%, var(--aurora-cyan) 0%, transparent 60%)",
         }}
       />
       <div
@@ -22,7 +22,7 @@ export function MeshBackground() {
         style={{
           animationDelay: "-6s",
           background:
-            "radial-gradient(circle at 70% 30%, #a78bfa 0%, transparent 60%)",
+            "radial-gradient(circle at 70% 30%, var(--aurora-violet) 0%, transparent 60%)",
         }}
       />
       <div
@@ -30,7 +30,7 @@ export function MeshBackground() {
         style={{
           animationDelay: "-12s",
           background:
-            "radial-gradient(circle at 50% 50%, #f472b6 0%, transparent 60%)",
+            "radial-gradient(circle at 50% 50%, var(--aurora-emerald) 0%, transparent 60%)",
         }}
       />
 

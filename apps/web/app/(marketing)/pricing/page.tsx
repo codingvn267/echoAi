@@ -4,67 +4,13 @@ import { Check, Sparkles } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
 import { Faq } from "@/modules/marketing/ui/sections/faq";
 import { FinalCta } from "@/modules/marketing/ui/sections/final-cta";
+import { HELORA_PLANS } from "@/modules/billing/constants";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Simple pricing for echoAi — start free, upgrade when you need voice, more conversations, or more seats.",
+    "Simple pricing for Helora — start free, upgrade when you need voice, more conversations, or more seats.",
 };
-
-const TIERS = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Try echoAi on a small project or staging site.",
-    features: [
-      "100 AI conversations / month",
-      "Chat widget on 1 site",
-      "Knowledge base — 10 documents",
-      "1 organization · 1 seat",
-      "Community support",
-    ],
-    cta: "Start free",
-    href: "/sign-up",
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    price: "$29",
-    period: "per month",
-    description: "For teams shipping AI customer support to production.",
-    features: [
-      "1,000 AI conversations / month",
-      "Chat + voice widget on 1 site",
-      "Knowledge base — 50 documents",
-      "1 organization · 5 seats",
-      "Vapi voice integration",
-      "Email support",
-      "Sentry error monitoring",
-    ],
-    cta: "Start 14-day trial",
-    href: "/sign-up",
-    highlighted: true,
-  },
-  {
-    name: "Scale",
-    price: "Custom",
-    period: "talk to us",
-    description: "Multi-brand teams, agencies, and high-volume workloads.",
-    features: [
-      "Unlimited AI conversations",
-      "Multiple sites + brands",
-      "Unlimited knowledge base",
-      "Multi-organization · unlimited seats",
-      "SSO + audit logs",
-      "Priority support + 99.9% SLA",
-      "Custom integrations",
-    ],
-    cta: "Contact sales",
-    href: "mailto:hello@echoai.app?subject=Scale%20plan",
-    highlighted: false,
-  },
-];
 
 const COMPARE: { row: string; values: (string | boolean)[] }[] = [
   { row: "AI chat conversations", values: ["100/mo", "1,000/mo", "Unlimited"] },
@@ -86,10 +32,7 @@ export default function PricingPage() {
             Pricing
           </p>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">
-            Pay as you{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
-              grow
-            </span>
+            Pay as you <span className="text-gradient-aurora">grow</span>
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             Start free. Upgrade when you outgrow it. Cancel anytime.
@@ -100,7 +43,7 @@ export default function PricingPage() {
       <section className="pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
-            {TIERS.map((tier) => (
+            {HELORA_PLANS.map((tier) => (
               <div
                 key={tier.name}
                 className={`relative rounded-2xl border p-8 backdrop-blur ${
@@ -119,20 +62,25 @@ export default function PricingPage() {
                 )}
                 <h3 className="text-lg font-semibold">{tier.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1.5">
-                  <span className="text-5xl font-bold tracking-tight">{tier.price}</span>
-                  <span className="text-sm text-muted-foreground">/{tier.period}</span>
+                  <span className="text-5xl font-bold tracking-tight">
+                    {tier.price}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    /{tier.period}
+                  </span>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">{tier.description}</p>
-                <Button
-                  asChild
-                  className={`mt-6 w-full ${tier.highlighted ? "" : "bg-foreground text-background hover:bg-foreground/90"}`}
-                  size="lg"
-                >
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {tier.description}
+                </p>
+                <Button asChild className="mt-6 w-full" size="lg" variant="neo">
                   <Link href={tier.href}>{tier.cta}</Link>
                 </Button>
                 <ul className="mt-8 space-y-3">
                   {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm">
+                    <li
+                      key={feature}
+                      className="flex items-start gap-2.5 text-sm"
+                    >
                       <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
                       <span className="text-muted-foreground">{feature}</span>
                     </li>
@@ -155,7 +103,7 @@ export default function PricingPage() {
               <thead>
                 <tr className="border-b border-border/60">
                   <th className="text-left p-4 font-medium text-muted-foreground"></th>
-                  {TIERS.map((t) => (
+                  {HELORA_PLANS.map((t) => (
                     <th key={t.name} className="text-left p-4 font-semibold">
                       {t.name}
                     </th>
@@ -164,7 +112,10 @@ export default function PricingPage() {
               </thead>
               <tbody>
                 {COMPARE.map((row, i) => (
-                  <tr key={i} className="border-b border-border/40 last:border-b-0">
+                  <tr
+                    key={i}
+                    className="border-b border-border/40 last:border-b-0"
+                  >
                     <td className="p-4 text-muted-foreground">{row.row}</td>
                     {row.values.map((v, j) => (
                       <td key={j} className="p-4 font-medium">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms governing your use of echoAi.",
+  description: "Terms governing your use of Helora.",
   robots: { index: true, follow: true },
 };
 
@@ -16,7 +16,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-3">1. Acceptance</h2>
           <p>
-            By creating an echoAi account or embedding our widget, you agree to these terms. If
+            By creating a Helora account or embedding our widget, you agree to these terms. If
             you don't agree, please don't use the service.
           </p>
         </section>
@@ -33,7 +33,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-3">3. Acceptable use</h2>
           <p>
-            Don't use echoAi to send spam, abuse customers, generate illegal content, or violate
+            Don't use Helora to send spam, abuse customers, generate illegal content, or violate
             third-party rights. We may suspend accounts that violate this section.
           </p>
         </section>
@@ -49,7 +49,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-3">5. Liability</h2>
           <p>
-            echoAi is provided "as is" without warranties. To the maximum extent permitted by law,
+            Helora is provided "as is" without warranties. To the maximum extent permitted by law,
             our liability is limited to the amount you paid us in the previous 12 months.
           </p>
         </section>
@@ -58,8 +58,8 @@ export default function TermsPage() {
           <h2 className="text-xl font-semibold text-foreground mb-3">6. Contact</h2>
           <p>
             Questions? Email{" "}
-            <a className="text-primary hover:underline" href="mailto:hello@echoai.app">
-              hello@echoai.app
+            <a className="text-primary hover:underline" href="mailto:hello@helora.ai">
+              hello@helora.ai
             </a>
             .
           </p>

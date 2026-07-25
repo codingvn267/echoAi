@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { type Feature, PluginCard } from "../components/plugin-card";
 import { api } from "@workspace/backend/_generated/api";
-import { useMutation, useQuery } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import {
   Dialog,
@@ -60,8 +60,16 @@ const vapiFeatures: Feature[] = [
 ];
 
 const formSchema = z.object({
-  publicApiKey: z.string().min(1, { message: "Public API key is required" }),
-  privateApiKey: z.string().min(1, { message: "Private API key is required" }),
+  publicApiKey: z
+    .string()
+    .trim()
+    .min(8, { message: "Enter a valid public API key" })
+    .max(512),
+  privateApiKey: z
+    .string()
+    .trim()
+    .min(8, { message: "Enter a valid private API key" })
+    .max(512),
 });
 
 const VapiPluginForm = ({
@@ -71,7 +79,7 @@ const VapiPluginForm = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
-  const upsertSecret = useMutation(api.private.secrets.upsert);
+  const upsertSecret = useAction(api.private.secrets.upsert);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -90,10 +98,12 @@ const VapiPluginForm = ({
         },
       });
       setOpen(false);
-      toast.success("Vapi secret created");
+      form.reset();
+      toast.success("Vapi connected");
     } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong");
+      toast.error(
+        error instanceof Error ? error.message : "Could not connect Vapi"
+      );
     }
   };
 
@@ -123,6 +133,7 @@ const VapiPluginForm = ({
                       {...field}
                       placeholder="Your public API key"
                       type="password"
+                      autoComplete="off"
                     />
                   </FormControl>
                   <FormMessage />
@@ -140,6 +151,7 @@ const VapiPluginForm = ({
                       {...field}
                       placeholder="Your private API key"
                       type="password"
+                      autoComplete="off"
                     />
                   </FormControl>
                   <FormMessage />
@@ -147,7 +159,11 @@ const VapiPluginForm = ({
               )}
             />
             <DialogFooter>
-              <Button disabled={form.formState.isSubmitting} type="submit">
+              <Button
+                variant="neo"
+                disabled={form.formState.isSubmitting}
+                type="submit"
+              >
                 {form.formState.isSubmitting ? "Connecting..." : "Connect"}
               </Button>
             </DialogFooter>
@@ -175,8 +191,9 @@ const VapiPluginRemoveForm = ({
       setOpen(false);
       toast.success("Vapi plugin removed");
     } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong");
+      toast.error(
+        error instanceof Error ? error.message : "Could not disconnect Vapi"
+      );
     }
   };
 
@@ -199,7 +216,7 @@ const VapiPluginRemoveForm = ({
   );
 };
 
-export const VapiView = () => {
+export const VapiView = ({ embedded = false }: { embedded?: boolean }) => {
   const vapiPlugin = useQuery(api.private.plugins.getOne, { service: "vapi" });
   const [connectOpen, setConnectOpen] = useState(false);
   const [removeOpen, setRemoveOpen] = useState(false);
@@ -214,16 +231,22 @@ export const VapiView = () => {
     <>
       <VapiPluginForm open={connectOpen} setOpen={setConnectOpen} />
       <VapiPluginRemoveForm open={removeOpen} setOpen={setRemoveOpen} />
-      <div className="flex min-h-screen flex-col bg-muted p-8">
-        <div className="mx-auto w-full max-w-screen-md">
-          <div className="space-y-2">
-            <h1 className="text-2xl md:text-4xl">Vapi Plugin</h1>
-            <p className="text-muted-foreground">
-              Connect Vapi to enable AI voice calls and phone support
-            </p>
-          </div>
+      <div
+        className={
+          embedded ? "w-full" : "flex min-h-screen flex-col bg-muted p-8"
+        }
+      >
+        <div className={embedded ? "w-full" : "mx-auto w-full max-w-screen-md"}>
+          {!embedded && (
+            <div className="space-y-2">
+              <h1 className="text-2xl md:text-4xl">Vapi Plugin</h1>
+              <p className="text-muted-foreground">
+                Connect Vapi to enable AI voice calls and phone support
+              </p>
+            </div>
+          )}
 
-          <div className="mt-8">
+          <div className={embedded ? "" : "mt-8"}>
             {vapiPlugin ? (
               <VapiConnectedView onDisconnect={toggleConnection} />
             ) : (

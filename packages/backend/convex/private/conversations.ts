@@ -1,8 +1,7 @@
 import { mutation, query } from "../_generated/server.js";
 import { ConvexError, v } from "convex/values";
 import { supportAgent } from "../system/ai/agents/supportAgent.js";
-import { MessageDoc, saveMessage } from "@convex-dev/agent";
-import { components } from "../_generated/api.js";
+import { MessageDoc } from "@convex-dev/agent";
 import { paginationOptsValidator, PaginationResult } from "convex/server";
 import { Doc } from "../_generated/dataModel.js";
 
@@ -197,40 +196,4 @@ export const getMany = query({
   },
 });
 
-export const create = mutation({
-  args: {
-    organizationId: v.string(),
-    contactSessionId: v.id("contactSessions"),
-  },
-  handler: async (ctx, args) => {
-    const session = await ctx.db.get(args.contactSessionId);
-
-    if (!session || session.expiresAt < Date.now()) {
-      throw new ConvexError({
-        code: "UNAUTHORIZED",
-        message: "Invalid session",
-      });
-    }
-
-    const { threadId } = await supportAgent.createThread(ctx, {
-      userId: args.organizationId,
-    });
-
-    await saveMessage(ctx, components.agent, {
-      threadId,
-      message: {
-        role: "assistant",
-        content: "Hello, how can I help you today?",
-      },
-    });
-
-    const conversationId = await ctx.db.insert("conversations", {
-      contactSessionId: session._id,
-      status: "unresolved",
-      organizationId: args.organizationId,
-      threadId,
-    });
-
-    return conversationId;
-  },
-});
+// Creation lives in public/conversations.ts, where the session tenant is verified.

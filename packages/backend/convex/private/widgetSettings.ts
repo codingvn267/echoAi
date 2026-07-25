@@ -31,6 +31,23 @@ export const upsert = mutation({
       });
     }
 
+    if (args.vapiSettings.assistantId) {
+      const assistantOwner = await ctx.db
+        .query("widgetSettings")
+        .withIndex("by_vapi_assistant_id", (q) =>
+          q.eq("vapiSettings.assistantId", args.vapiSettings.assistantId)
+        )
+        .unique();
+
+      if (assistantOwner && assistantOwner.organizationId !== orgId) {
+        throw new ConvexError({
+          code: "CONFLICT",
+          message:
+            "This Vapi assistant is already assigned to another organization",
+        });
+      }
+    }
+
     const existingWidgetSettings = await ctx.db
       .query("widgetSettings")
       .withIndex("by_organization_id", (q) => q.eq("organizationId", orgId))

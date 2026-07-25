@@ -158,6 +158,7 @@ export const UploadDialog = ({
             Cancel
           </Button>
           <Button
+            variant="neo"
             onClick={handleUpload}
             disabled={uploadedFiles.length === 0 || isUploading || !uploadForm.category}
           >

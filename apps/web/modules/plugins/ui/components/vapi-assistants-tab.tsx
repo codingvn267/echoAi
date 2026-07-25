@@ -1,6 +1,7 @@
 "use client";
 
-import { BotIcon } from "lucide-react";
+import { BotIcon, RefreshCwIcon } from "lucide-react";
+import { Button } from "@workspace/ui/components/button";
 
 import {
   Table,
@@ -13,7 +14,7 @@ import {
 import { useVapiAssistants } from "../../hooks/use-vapi-data";
 
 export const VapiAssistantsTab = () => {
-  const { data: assistants, isLoading } = useVapiAssistants();
+  const { data: assistants, error, isLoading, retry } = useVapiAssistants();
 
   return (
     <div className="border-t bg-background">
@@ -39,6 +40,26 @@ export const VapiAssistantsTab = () => {
                 </TableRow>
               );
             }
+            if (error) {
+              return (
+                <TableRow>
+                  <TableCell colSpan={3} className="px-6 py-8 text-center">
+                    <p className="text-sm text-muted-foreground">
+                      Could not load assistants from Vapi.
+                    </p>
+                    <Button
+                      className="mt-3"
+                      onClick={retry}
+                      size="sm"
+                      variant="neo"
+                    >
+                      <RefreshCwIcon />
+                      Try again
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            }
             if (assistants.length === 0) {
               return (
                 <TableRow>
@@ -57,9 +78,7 @@ export const VapiAssistantsTab = () => {
                 <TableCell className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <BotIcon className="size-4 text-muted-foreground" />
-                    <span>
-                      {assistant.name || "Unnamed Assistant"}
-                    </span>
+                    <span>{assistant.name || "Unnamed Assistant"}</span>
                   </div>
                 </TableCell>
                 <TableCell className="px-6 py-4">
@@ -68,7 +87,7 @@ export const VapiAssistantsTab = () => {
                   </span>
                 </TableCell>
                 <TableCell className="max-w-xs px-6 py-4">
-                  <p className = "truncate text-muted-foreground text-sm">
+                  <p className="truncate text-muted-foreground text-sm">
                     {assistant.firstMessage || "No greeting configured"}
                   </p>
                 </TableCell>

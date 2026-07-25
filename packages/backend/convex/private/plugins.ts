@@ -1,5 +1,6 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, query } from "../_generated/server.js";
+import { internal } from "../_generated/api.js";
 
 export const remove = mutation({
   args: {
@@ -22,20 +23,30 @@ export const remove = mutation({
       });
     }
 
+    if (identity.orgRole !== "org:admin") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message: "Only organization admins can manage integrations",
+      });
+    }
+
     const existingPlugin = await ctx.db
       .query("plugins")
       .withIndex("by_organization_id_and_service", (q) =>
         q.eq("organizationId", orgId).eq("service", args.service)
       )
       .unique();
-    
+
     if (!existingPlugin) {
       throw new ConvexError({
         code: "NOT_FOUND",
-        message: "Plugin not found"
-      })
+        message: "Plugin not found",
+      });
     }
     await ctx.db.delete(existingPlugin._id);
+    await ctx.scheduler.runAfter(0, internal.system.secrets.remove, {
+      secretName: existingPlugin.secretName,
+    });
   },
 });
 

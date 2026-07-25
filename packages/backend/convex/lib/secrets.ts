@@ -1,9 +1,11 @@
 import {
   CreateSecretCommand,
+  DeleteSecretCommand,
   GetSecretValueCommand,
   type GetSecretValueCommandOutput,
   PutSecretValueCommand,
   ResourceExistsException,
+  ResourceNotFoundException,
   SecretsManagerClient,
 } from "@aws-sdk/client-secrets-manager";
 
@@ -46,6 +48,22 @@ export async function upsertSecret(
         })
       );
     } else {
+      throw error;
+    }
+  }
+}
+
+export async function deleteSecret(secretName: string): Promise<void> {
+  const client = createSecretsManagerClient();
+  try {
+    await client.send(
+      new DeleteSecretCommand({
+        SecretId: secretName,
+        ForceDeleteWithoutRecovery: true,
+      })
+    );
+  } catch (error) {
+    if (!(error instanceof ResourceNotFoundException)) {
       throw error;
     }
   }

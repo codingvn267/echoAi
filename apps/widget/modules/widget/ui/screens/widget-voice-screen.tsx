@@ -95,6 +95,7 @@ export const WidgetVoiceScreen = () => {
                 className="w-full"
                 disabled={isConnecting}
                 size="lg"
+                variant="neo"
                 onClick={() => startCall()}
               >
                 <MicIcon />

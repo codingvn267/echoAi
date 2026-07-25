@@ -2,7 +2,7 @@ import { openai } from "@ai-sdk/openai";
 import { createTool, saveMessage } from "@convex-dev/agent";
 import { generateText } from "ai";
 import z from "zod";
-import { internal, components } from "@workspace/backend/_generated/api.js";
+import { internal, components } from "../../../_generated/api.js";
 import rag from "../rag.js";
 import { SEARCH_INTERPRETER_PROMPT } from "../constants.js";
 

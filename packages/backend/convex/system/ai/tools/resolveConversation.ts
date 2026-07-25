@@ -1,6 +1,6 @@
 import { createTool, saveMessage } from "@convex-dev/agent";
 import z from "zod";
-import { internal } from "@workspace/backend/_generated/api.js";
+import { internal } from "../../../_generated/api.js";
 import { supportAgent } from "../agents/supportAgent.js";
 
 export const resolveConversation = createTool({

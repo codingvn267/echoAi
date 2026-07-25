@@ -1,14 +1,20 @@
-import { v } from "convex/values";
-import { mutation } from "../_generated/server.js";
+import { ConvexError, v } from "convex/values";
+import { action, mutation } from "../_generated/server.js";
+import { internal } from "../_generated/api.js";
+import {
+  contactSessionSignaturePayload,
+  verifyProxySignature,
+} from "../lib/proxyAuth.js";
+import type { Id } from "../_generated/dataModel.js";
 
-
-const SESSION_DURATION_MS = 24 * 60 * 60 * 1000;
-
-export const create = mutation({
+export const create = action({
   args: {
     name: v.string(),
     email: v.string(),
     organizationId: v.string(),
+    clientAddressHash: v.string(),
+    timestamp: v.number(),
+    signature: v.string(),
     metadata: v.optional(
       v.object({
         userAgent: v.optional(v.string()),
@@ -26,23 +32,31 @@ export const create = mutation({
       })
     ),
   },
-  handler: async (ctx, args) => {
-    const now = Date.now();
-    const expiresAt = now + SESSION_DURATION_MS;
+  handler: async (ctx, args): Promise<Id<"contactSessions">> => {
+    const timestampAge = Math.abs(Date.now() - args.timestamp);
+    const signatureValid = await verifyProxySignature({
+      payload: contactSessionSignaturePayload(args),
+      signature: args.signature,
+      secret: process.env.WIDGET_PROXY_SECRET,
+    });
+    if (!signatureValid || timestampAge > 60_000) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Invalid widget server authorization",
+      });
+    }
 
-    const contactSessionId = await ctx.db.insert("contactSessions", {
+    return await ctx.runMutation(internal.system.contactSessions.create, {
       name: args.name,
       email: args.email,
       organizationId: args.organizationId,
-      expiresAt,
+      clientAddressHash: args.clientAddressHash,
       metadata: args.metadata,
-    })
-
-    return contactSessionId;
+    });
   },
 });
 
-export const validate = mutation ({
+export const validate = mutation({
   args: {
     contactSessionId: v.id("contactSessions"),
   },
@@ -51,11 +65,11 @@ export const validate = mutation ({
     const contactSession = await ctx.db.get(args.contactSessionId);
 
     if (!contactSession) {
-      return { valid: false, reason: "Contact session not found!"};
+      return { valid: false, reason: "Contact session not found!" };
     }
 
     if (contactSession.expiresAt < Date.now()) {
-      return { valid: false, reason: "Contact session expired!"}
+      return { valid: false, reason: "Contact session expired!" };
     }
 
     return { valid: true, contactSession };

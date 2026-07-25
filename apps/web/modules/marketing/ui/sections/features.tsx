@@ -5,12 +5,13 @@ import {
   Palette,
   Building2,
   Plug,
+  type LucideIcon,
 } from "lucide-react";
 
 type Feature = {
   title: string;
   description: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
   className: string;
   gradient: string;
 };
@@ -34,7 +35,7 @@ const FEATURES: Feature[] = [
   },
   {
     title: "Knowledge Base",
-    description: "Upload PDFs, docs and links. echoAi cites your content when it answers.",
+    description: "Upload PDFs, docs and links. Helora cites your content when it answers.",
     icon: BookOpen,
     className: "",
     gradient: "from-pink-500/20 via-transparent to-transparent",
@@ -73,7 +74,7 @@ export function Features() {
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight">
             Everything your support stack needs —{" "}
-            <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
+            <span className="text-gradient-aurora">
               in one widget
             </span>
             .

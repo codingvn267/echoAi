@@ -6,16 +6,16 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@workspace/ui/components/sonner";
 import { fontSans, fontMono } from "@/lib/fonts";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://echoai.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://helora.ai";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "echoAi — AI customer support that talks and chats, 24/7",
-    template: "%s · echoAi",
+    default: "Helora — AI customer support that talks and chats, 24/7",
+    template: "%s · Helora",
   },
   description:
-    "echoAi is an embeddable AI agent that answers your customers over chat and voice — so your team only handles what truly needs a human.",
+    "Helora is an embeddable AI agent that answers your customers over chat and voice — so your team only handles what truly needs a human.",
   keywords: [
     "AI customer support",
     "AI chatbot",
@@ -24,22 +24,22 @@ export const metadata: Metadata = {
     "support widget",
     "Convex",
     "Clerk",
-    "echoAi",
+    "Helora",
   ],
-  applicationName: "echoAi",
-  authors: [{ name: "echoAi" }],
-  creator: "echoAi",
+  applicationName: "Helora",
+  authors: [{ name: "Helora" }],
+  creator: "Helora",
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: "echoAi",
-    title: "echoAi — AI customer support that talks and chats, 24/7",
+    siteName: "Helora",
+    title: "Helora — AI customer support that talks and chats, 24/7",
     description:
       "Drop a single script tag and ship an AI agent that handles chat + voice support, then escalates only what really needs a human.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "echoAi — AI customer support, 24/7",
+    title: "Helora — AI customer support, 24/7",
     description:
       "AI agent that handles chat + voice support. Embeddable in 5 minutes.",
   },
@@ -49,14 +49,15 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    shortcut: "/logo.svg",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0f" },
+    { media: "(prefers-color-scheme: light)", color: "#f0fdfa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1524" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -75,7 +76,7 @@ export default function RootLayout({
         <ClerkProvider
           appearance={{
             variables: {
-              colorPrimary: "#7dd3e4",
+              colorPrimary: "#06b6d4",
             },
           }}
           signInFallbackRedirectUrl="/dashboard"

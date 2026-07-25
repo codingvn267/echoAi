@@ -1,6 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { RAG } from "@convex-dev/rag";
-import { components } from "@workspace/backend/_generated/api.js";
+import { components } from "../../_generated/api.js";
 
 const rag = new RAG(components.rag, {
   textEmbeddingModel: openai.embedding("text-embedding-3-large"),
