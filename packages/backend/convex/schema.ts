@@ -6,6 +6,9 @@ export default defineSchema({
     organizationId: v.string(),
     status: v.string(),
     entitlement: v.optional(v.union(v.literal("free"), v.literal("paid"))),
+    plan: v.optional(
+      v.union(v.literal("starter"), v.literal("growth"), v.literal("scale"))
+    ),
     providerUpdatedAt: v.optional(v.number()),
     updatedAt: v.optional(v.number()),
   }).index("by_organization_id", ["organizationId"]),

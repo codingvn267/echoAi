@@ -133,7 +133,63 @@ describe("integration authorization", () => {
             privateApiKey: "private_key_test",
           },
         })
-    ).rejects.toThrow("active Pro subscription");
+    ).rejects.toThrow("active paid subscription");
+  });
+
+  it("requires Growth before saving Vapi credentials", async () => {
+    const t = convexTest(schema, modules);
+    await t.mutation(internal.system.subscriptions.upsert, {
+      organizationId: ORG,
+      status: "active",
+      plan: "starter",
+      providerUpdatedAt: Date.now(),
+    });
+
+    await expect(
+      t
+        .withIdentity({
+          subject: "admin_user",
+          orgId: ORG,
+          orgRole: "org:admin",
+        })
+        .action(api.private.secrets.upsert, {
+          service: "vapi",
+          value: {
+            publicApiKey: "public_key_test",
+            privateApiKey: "private_key_test",
+          },
+        })
+    ).rejects.toThrow("active Growth subscription");
+  });
+
+  it("allows Starter chat customization but rejects voice settings", async () => {
+    const t = convexTest(schema, modules);
+    await t.mutation(internal.system.subscriptions.upsert, {
+      organizationId: ORG,
+      status: "active",
+      plan: "starter",
+      providerUpdatedAt: Date.now(),
+    });
+    const asStarterAdmin = t.withIdentity({
+      subject: "admin_user",
+      orgId: ORG,
+      orgRole: "org:admin",
+    });
+
+    await expect(
+      asStarterAdmin.mutation(api.private.widgetSettings.upsert, {
+        greetMessage: "Welcome",
+        defaultSuggestions: {},
+        vapiSettings: {},
+      })
+    ).resolves.toBeNull();
+    await expect(
+      asStarterAdmin.mutation(api.private.widgetSettings.upsert, {
+        greetMessage: "Welcome",
+        defaultSuggestions: {},
+        vapiSettings: { assistantId: "assistant_test" },
+      })
+    ).rejects.toThrow("active Growth subscription");
   });
 });
 
@@ -220,6 +276,7 @@ describe("webhook authentication and durability", () => {
     await t.mutation(internal.system.subscriptions.upsert, {
       organizationId: ORG,
       status: "active",
+      plan: "growth",
       providerUpdatedAt: 2_000,
     });
     const stale = await t.mutation(internal.system.subscriptions.upsert, {
@@ -235,6 +292,7 @@ describe("webhook authentication and durability", () => {
     expect(stale).toEqual({ applied: false });
     expect(subscription?.status).toBe("active");
     expect(subscription?.entitlement).toBe("paid");
+    expect(subscription?.plan).toBe("growth");
   });
 });
 

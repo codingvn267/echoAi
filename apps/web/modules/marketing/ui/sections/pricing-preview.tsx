@@ -25,6 +25,7 @@ export function PricingPreview() {
         <div className="grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
           {HELORA_PLANS.map((tier) => (
             <div
+              data-plan={tier.name.toLowerCase()}
               key={tier.name}
               className={`relative rounded-2xl border p-8 backdrop-blur ${
                 tier.highlighted
@@ -46,9 +47,11 @@ export function PricingPreview() {
                 <span className="text-5xl font-bold tracking-tight">
                   {tier.price}
                 </span>
-                <span className="text-sm text-muted-foreground">
-                  /{tier.period}
-                </span>
+                {tier.period ? (
+                  <span className="text-sm text-muted-foreground">
+                    /{tier.period}
+                  </span>
+                ) : null}
               </div>
               <p className="mt-3 text-sm text-muted-foreground">
                 {tier.description}

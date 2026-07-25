@@ -9,6 +9,7 @@ export const listSubscriptions = internalQuery({
     return subscriptions.map((subscription) => ({
       organizationId: subscription.organizationId,
       status: subscription.status,
+      plan: subscription.plan,
     }));
   },
 });
@@ -24,19 +25,30 @@ export const reconcileSubscriptions = internalAction({
   ): Promise<{ checked: number; corrected: number; failed: number }> => {
     const secretKey = process.env.CLERK_SECRET_KEY;
     if (!secretKey) {
-      console.error("Subscription reconciliation skipped: CLERK_SECRET_KEY not set");
+      console.error(
+        "Subscription reconciliation skipped: CLERK_SECRET_KEY not set"
+      );
       return { checked: 0, corrected: 0, failed: 0 };
     }
 
     const clerkClient = createClerkClient({ secretKey });
-    const subscriptions: { organizationId: string; status: string }[] =
-      await ctx.runQuery(internal.system.reconciliation.listSubscriptions, {});
+    const subscriptions: {
+      organizationId: string;
+      status: string;
+      plan?: "starter" | "growth" | "scale";
+    }[] = await ctx.runQuery(
+      internal.system.reconciliation.listSubscriptions,
+      {}
+    );
 
     let corrected = 0;
     let failed = 0;
 
     for (const subscription of subscriptions) {
-      const expectedMax = subscription.status === "active" ? 5 : 1;
+      const expectedMax =
+        subscription.status === "active" && subscription.plan !== "starter"
+          ? 5
+          : 1;
       try {
         const organization = await clerkClient.organizations.getOrganization({
           organizationId: subscription.organizationId,

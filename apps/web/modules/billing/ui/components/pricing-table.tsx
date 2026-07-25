@@ -10,8 +10,6 @@ import { Skeleton } from "@workspace/ui/components/skeleton";
 
 import { HELORA_PLANS, type HeloraPlan } from "@/modules/billing/constants";
 
-const PRO_PRICE_CENTS = 2_900;
-
 const PlanCard = ({
   active,
   children,
@@ -22,6 +20,7 @@ const PlanCard = ({
   plan: HeloraPlan;
 }) => (
   <article
+    data-plan={plan.name.toLowerCase()}
     className={`relative flex h-full flex-col rounded-lg border bg-background/85 p-6 shadow-sm backdrop-blur-sm ${
       plan.highlighted ? "border-primary/50 ring-1 ring-primary/20" : ""
     }`}
@@ -44,7 +43,9 @@ const PlanCard = ({
     </div>
     <div className="mt-4 flex items-baseline gap-1.5">
       <span className="text-4xl font-bold tracking-tight">{plan.price}</span>
-      <span className="text-sm text-muted-foreground">/{plan.period}</span>
+      {plan.period ? (
+        <span className="text-sm text-muted-foreground">/{plan.period}</span>
+      ) : null}
     </div>
     <p className="mt-3 min-h-10 text-sm leading-5 text-muted-foreground">
       {plan.description}
@@ -66,46 +67,42 @@ const PlanCard = ({
 export const PricingTable = () => {
   const { has } = useAuth();
   const { data: clerkPlans, isLoading } = usePlans({ for: "organization" });
-  const hasPro = has?.({ plan: "pro" }) ?? false;
-  const proPlan = clerkPlans.find(
-    (plan) =>
-      plan.name.toLowerCase() === "pro" &&
-      plan.fee.amount === PRO_PRICE_CENTS &&
-      plan.fee.currency.toUpperCase() === "USD"
+  const findClerkPlan = (catalogPlan: HeloraPlan) =>
+    catalogPlan.clerk
+      ? clerkPlans.find(
+          (clerkPlan) =>
+            clerkPlan.name.toLowerCase() === catalogPlan.name.toLowerCase() &&
+            clerkPlan.fee.amount === catalogPlan.clerk?.monthlyPriceCents &&
+            clerkPlan.fee.currency.toUpperCase() === "USD"
+        )
+      : undefined;
+  const missingClerkPlans = HELORA_PLANS.filter(
+    (plan) => plan.clerk && !findClerkPlan(plan)
   );
 
   return (
     <div className="space-y-5">
       <div className="grid gap-5 lg:grid-cols-3">
         {HELORA_PLANS.map((plan) => {
-          const active =
-            plan.name === "Pro" ? hasPro : plan.name === "Free" && !hasPro;
+          const active = plan.clerk
+            ? (has?.({ plan: plan.clerk.slug }) ?? false)
+            : false;
+          const clerkPlan = findClerkPlan(plan);
 
           return (
             <PlanCard active={active} key={plan.name} plan={plan}>
-              {plan.name === "Free" ? (
-                <Button
-                  className="w-full"
-                  disabled={active}
-                  size="lg"
-                  variant="neo"
-                >
-                  {active ? "Current plan" : "Free plan"}
-                </Button>
-              ) : null}
-
-              {plan.name === "Pro" ? (
+              {plan.clerk ? (
                 isLoading ? (
                   <Skeleton className="h-10 w-full" />
-                ) : hasPro ? (
+                ) : active ? (
                   <Button className="w-full" disabled size="lg" variant="neo">
                     Current plan
                   </Button>
-                ) : proPlan ? (
+                ) : clerkPlan ? (
                   <CheckoutButton
                     for="organization"
                     newSubscriptionRedirectUrl="/billing"
-                    planId={proPlan.id}
+                    planId={clerkPlan.id}
                     planPeriod="month"
                   >
                     <Button className="w-full" size="lg" variant="neo">
@@ -114,7 +111,7 @@ export const PricingTable = () => {
                   </CheckoutButton>
                 ) : (
                   <Button className="w-full" disabled size="lg" variant="neo">
-                    Configure Pro in Clerk
+                    Configure {plan.name} in Clerk
                   </Button>
                 )
               ) : null}
@@ -129,15 +126,20 @@ export const PricingTable = () => {
         })}
       </div>
 
-      {!isLoading && !proPlan && !hasPro ? (
+      {!isLoading && missingClerkPlans.length > 0 ? (
         <div className="flex items-start gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
           <CircleAlertIcon className="mt-0.5 size-4 shrink-0" />
           <p>
-            Checkout is paused because Clerk does not have an organization plan
-            named
-            <strong> Pro</strong> priced at <strong>$29 USD monthly</strong>.
-            Create that plan with the slug <strong>pro</strong> in Clerk Billing
-            to enable checkout.
+            Checkout is paused for plans that do not exactly match Clerk:{" "}
+            <strong>
+              {missingClerkPlans
+                .map(
+                  (plan) =>
+                    `${plan.name} (${plan.price} USD monthly, slug ${plan.clerk?.slug})`
+                )
+                .join(" and ")}
+            </strong>
+            . Update the organization plans in Clerk Billing to enable checkout.
           </p>
         </div>
       ) : null}

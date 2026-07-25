@@ -6,16 +6,16 @@ import { FilesView } from "@/modules/files/ui/views/files-view";
 const Page = () => {
   return (
     <Protect
-      condition={(has) => has({plan: "pro"})}
+      condition={(has) => has({ plan: "starter" }) || has({ plan: "growth" })}
       fallback={
         <PremiumFeatureOverlay>
           <FilesView />
         </PremiumFeatureOverlay>
       }
     >
-      <FilesView/>
+      <FilesView />
     </Protect>
-  )
-}
+  );
+};
 
 export default Page;

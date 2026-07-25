@@ -1,5 +1,5 @@
 export interface HeloraPlan {
-  name: "Free" | "Pro" | "Scale";
+  name: "Starter" | "Growth" | "Scale";
   price: string;
   period: string;
   description: string;
@@ -7,56 +7,72 @@ export interface HeloraPlan {
   cta: string;
   href: string;
   highlighted: boolean;
+  clerk?: {
+    monthlyPriceCents: number;
+    slug: "starter" | "growth";
+  };
 }
 
 export const HELORA_PLANS: HeloraPlan[] = [
   {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Try Helora on a small project or staging site.",
+    name: "Starter",
+    price: "$79",
+    period: "month",
+    description: "For a single location getting started with an AI front desk.",
     features: [
-      "100 AI conversations / month",
-      "Chat widget on 1 site",
-      "Knowledge base - 10 documents",
-      "1 organization - 1 seat",
-      "Community support",
+      "Website chat widget",
+      "Lead capture & logging",
+      "Appointment booking",
+      "Email staff alerts",
+      "Up to 500 AI messages / month",
+      "1 location",
     ],
-    cta: "Start free",
+    cta: "Start free trial",
     href: "/sign-up",
     highlighted: false,
+    clerk: {
+      monthlyPriceCents: 7_900,
+      slug: "starter",
+    },
   },
   {
-    name: "Pro",
-    price: "$29",
-    period: "per month",
-    description: "For teams shipping AI customer support to production.",
+    name: "Growth",
+    price: "$199",
+    period: "month",
+    description: "For busy teams that need voice, messaging, and more volume.",
     features: [
-      "1,000 AI conversations / month",
-      "Chat + voice widget on 1 site",
-      "Knowledge base - 50 documents",
-      "1 organization - 5 seats",
-      "Vapi voice integration",
-      "Email support",
+      "Website chat widget",
+      "Lead capture & logging",
+      "Appointment booking",
+      "Voice & phone agent",
+      "SMS + email staff alerts",
+      "Custom branding & greeting",
+      "Up to 2,500 AI messages / month",
+      "Up to 3 locations",
+      "Priority support",
     ],
-    cta: "Start 14-day trial",
+    cta: "Start free trial",
     href: "/sign-up",
     highlighted: true,
+    clerk: {
+      monthlyPriceCents: 19_900,
+      slug: "growth",
+    },
   },
   {
     name: "Scale",
     price: "Custom",
-    period: "talk to us",
-    description: "Multi-brand teams, agencies, and high-volume workloads.",
+    period: "",
+    description: "For multi-location groups and high-volume operations.",
     features: [
-      "Unlimited AI conversations",
-      "Multiple sites + brands",
-      "Unlimited knowledge base",
-      "Multi-organization - unlimited seats",
-      "SSO + audit logs",
-      "Priority support + SLA",
+      "Everything in Growth",
+      "Unlimited locations",
+      "Up to 5,000 AI messages / month",
+      "Dedicated onboarding & training",
+      "SLA & account manager",
+      "Custom integrations",
     ],
-    cta: "Contact sales",
+    cta: "Talk to sales",
     href: "mailto:hello@helora.ai?subject=Scale%20plan",
     highlighted: false,
   },

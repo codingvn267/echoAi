@@ -43,7 +43,17 @@ export const upsert = action({
     if (subscription?.status !== "active") {
       throw new ConvexError({
         code: "SUBSCRIPTION_REQUIRED",
-        message: "An active Pro subscription is required",
+        message: "An active paid subscription is required",
+      });
+    }
+    if (
+      subscription.plan &&
+      subscription.plan !== "growth" &&
+      subscription.plan !== "scale"
+    ) {
+      throw new ConvexError({
+        code: "SUBSCRIPTION_REQUIRED",
+        message: "An active Growth subscription is required",
       });
     }
 

@@ -10,14 +10,14 @@ It assumes you can use a terminal and you have a credit card to register the pro
 
 ## What you'll need (free accounts)
 
-| Service                                             | What it does                                  | Cost |
-|-----------------------------------------------------|-----------------------------------------------|------|
-| [Vercel](https://vercel.com)                        | Hosts `apps/web` and `apps/widget`            | Free |
-| [Convex](https://convex.dev)                        | Database + serverless functions for the app   | Free |
-| [Clerk](https://clerk.com)                          | Auth + organizations + **billing**            | Free |
-| [Vapi](https://vapi.ai)                             | Voice AI (only if you want voice calls)       | Pay-as-you-go |
-| [Sentry](https://sentry.io)                         | Error monitoring (optional but recommended)   | Free |
-| A domain (e.g. echoai.app)                          | Custom domain                                 | ~$10/yr |
+| Service                      | What it does                                | Cost          |
+| ---------------------------- | ------------------------------------------- | ------------- |
+| [Vercel](https://vercel.com) | Hosts `apps/web` and `apps/widget`          | Free          |
+| [Convex](https://convex.dev) | Database + serverless functions for the app | Free          |
+| [Clerk](https://clerk.com)   | Auth + organizations + **billing**          | Free          |
+| [Vapi](https://vapi.ai)      | Voice AI (only if you want voice calls)     | Pay-as-you-go |
+| [Sentry](https://sentry.io)  | Error monitoring (optional but recommended) | Free          |
+| A domain (e.g. echoai.app)   | Custom domain                               | ~$10/yr       |
 
 ---
 
@@ -44,6 +44,7 @@ pnpm setup           # runs `convex dev --until-success`
 ```
 
 This will:
+
 - Open a browser to log into Convex
 - Create a new project (call it `echoai-prod` or similar)
 - Generate types in `_generated/`
@@ -59,8 +60,12 @@ Set the URL in `apps/web/.env.local` (see step 3).
 2. **Enable Organizations**: Settings → Organizations → toggle ON.
    - Force users to belong to an organization (echoAi multi-tenants by org).
 3. **Enable Billing**: Settings → Billing → enable Clerk Billing.
-   - Create your **Pro** plan (e.g. $29/mo) — give it the **slug `pro`**
-     (the dashboard's `<Protect plan="pro">` checks this exact slug).
+   - Create a **Starter** organization plan at **$79 USD/month** with the slug
+     **`starter`**.
+   - Create a **Growth** organization plan at **$199 USD/month** with the slug
+     **`growth`**.
+   - Paid dashboard features accept either slug. Checkout remains disabled if
+     a plan's name, monthly USD price, or slug does not match this catalog.
 4. **Get your API keys**: API Keys → copy `Publishable Key` and `Secret Key`.
 5. **Set up the subscription webhook so Convex can react to upgrades/downgrades**:
    - Webhooks → Add endpoint
@@ -94,6 +99,7 @@ pnpm dev
 ```
 
 Open:
+
 - http://localhost:3000 — marketing landing
 - http://localhost:3000/sign-up — create your first account
 - After sign-up you'll be sent through `/org-selection` → create an org → land on `/dashboard`
@@ -162,13 +168,13 @@ Edit the webhook from step 2 to use the **production** Convex URL
 
 ## Troubleshooting
 
-| Problem | Fix |
-|---|---|
-| Sign-in spins forever | Clerk publishable key wrong env var name (`NEXT_PUBLIC_…`) or middleware excluded `/sign-in` |
-| Always redirected to `/org-selection` | You need to create an organization for the signed-in user |
-| Webhook fails | Convex env var `CLERK_WEBHOOK_SECRET` doesn't match Clerk dashboard |
-| `/billing` empty | Enable Billing in Clerk dashboard and create a `pro` plan |
-| Build fails on Vercel | Make sure Vercel Project's `Install Command` is `pnpm install` and Node version is 20 |
+| Problem                               | Fix                                                                                                            |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Sign-in spins forever                 | Clerk publishable key wrong env var name (`NEXT_PUBLIC_…`) or middleware excluded `/sign-in`                   |
+| Always redirected to `/org-selection` | You need to create an organization for the signed-in user                                                      |
+| Webhook fails                         | Convex env var `CLERK_WEBHOOK_SECRET` doesn't match Clerk dashboard                                            |
+| `/billing` checkout disabled          | Enable Clerk Billing and create the `starter` and `growth` plans with the exact names and monthly prices above |
+| Build fails on Vercel                 | Make sure Vercel Project's `Install Command` is `pnpm install` and Node version is 20                          |
 
 ---
 

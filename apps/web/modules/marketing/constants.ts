@@ -99,13 +99,10 @@ export const PRICING: {
 }[] = HELORA_PLANS.map((plan) => ({
   name: plan.name,
   price: plan.price,
-  cadence: plan.period === "per month" ? "/mo" : "",
-  annualNote:
-    plan.name === "Free"
-      ? "Free forever"
-      : plan.name === "Pro"
-        ? "14-day free trial — cancel anytime"
-        : "Volume pricing",
+  cadence: plan.period === "month" ? "/mo" : "",
+  annualNote: plan.clerk
+    ? "14-day free trial — cancel anytime"
+    : "Volume pricing",
   blurb: plan.description,
   features: plan.features,
   cta: plan.cta,
@@ -114,7 +111,7 @@ export const PRICING: {
 }));
 
 export const PRICING_NOTES: string[] = [
-  "14-day free trial on Pro — cancel anytime.",
+  "14-day free trial on Starter and Growth — cancel anytime.",
   "No setup fees. Cancel anytime.",
   'A "conversation" is one unique visitor thread in a billing month, across chat, voice, and phone.',
   "Voice usage may incur additional provider charges.",

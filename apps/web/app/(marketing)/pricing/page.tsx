@@ -13,14 +13,14 @@ export const metadata: Metadata = {
 };
 
 const COMPARE: { row: string; values: (string | boolean)[] }[] = [
-  { row: "AI chat conversations", values: ["100/mo", "1,000/mo", "Unlimited"] },
-  { row: "Voice calls (Vapi)", values: [false, true, true] },
-  { row: "Knowledge base", values: ["10 docs", "50 docs", "Unlimited"] },
-  { row: "Sites / brands", values: ["1", "1", "Multiple"] },
-  { row: "Team seats", values: ["1", "5", "Unlimited"] },
-  { row: "Multi-organization", values: [false, false, true] },
-  { row: "SSO + audit logs", values: [false, false, true] },
-  { row: "Support", values: ["Community", "Email", "Priority + SLA"] },
+  { row: "AI messages", values: ["500/mo", "2,500/mo", "5,000/mo"] },
+  { row: "Website chat", values: [true, true, true] },
+  { row: "Voice & phone agent", values: [false, true, true] },
+  { row: "Appointment booking", values: [true, true, true] },
+  { row: "Locations", values: ["1", "Up to 3", "Unlimited"] },
+  { row: "Staff alerts", values: ["Email", "SMS + email", "Custom"] },
+  { row: "Custom branding", values: [false, true, true] },
+  { row: "Support", values: ["Standard", "Priority", "SLA + account manager"] },
 ];
 
 export default function PricingPage() {
@@ -45,6 +45,7 @@ export default function PricingPage() {
           <div className="grid gap-6 md:grid-cols-3 max-w-6xl mx-auto">
             {HELORA_PLANS.map((tier) => (
               <div
+                data-plan={tier.name.toLowerCase()}
                 key={tier.name}
                 className={`relative rounded-2xl border p-8 backdrop-blur ${
                   tier.highlighted
@@ -65,9 +66,11 @@ export default function PricingPage() {
                   <span className="text-5xl font-bold tracking-tight">
                     {tier.price}
                   </span>
-                  <span className="text-sm text-muted-foreground">
-                    /{tier.period}
-                  </span>
+                  {tier.period ? (
+                    <span className="text-sm text-muted-foreground">
+                      /{tier.period}
+                    </span>
+                  ) : null}
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground">
                   {tier.description}

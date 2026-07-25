@@ -86,6 +86,7 @@ next begins. Do not skip ahead.
 `@react-three/fiber`, `@react-three/drei`. `apps/widget`: `motion`.
 
 **Known limitations / flagged, not fixed here:**
+
 - Clerk's sign-in/sign-up card still literally reads "Sign in to EchoAi" — this
   text comes from Clerk's own Dashboard "Application name" setting tied to the
   API keys, not from this repo. Requires a manual update in the Clerk
@@ -143,6 +144,7 @@ next begins. Do not skip ahead.
       horizontal overflow.
 
 **Deliberately scoped down / deferred (documented, not silently dropped):**
+
 - Did **not** literally reorder `page.tsx`'s sections into the full 10-stage
   IA from the original brief. The existing order (Hero+TL;DR → LogosMarquee →
   Features → HowItWorks → PricingPreview → Testimonials → Faq → FinalCta)
@@ -269,14 +271,14 @@ non-blocking and does not affect functionality.
 
 ### Full validation sequence
 
-| Check | Result |
-|---|---|
-| `pnpm format:check` | ✅ Pass |
-| `pnpm typecheck` | ✅ Pass, all workspaces |
+| Check                                                  | Result                                                                                                               |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `pnpm format:check`                                    | ✅ Pass                                                                                                              |
+| `pnpm typecheck`                                       | ✅ Pass, all workspaces                                                                                              |
 | `pnpm --filter web lint` / `pnpm --filter widget lint` | ✅ Pass — only the same 3 pre-existing `packages/ui` warnings from Phase 0 baseline (unrelated files, never touched) |
-| `pnpm --filter @workspace/backend test` | ✅ 11/11 |
-| `pnpm build` (web + widget) | ✅ Pass |
-| `pnpm --filter e2e test` (16 tests, Chromium + WebKit) | 9 passed / 7 failed — **all 7 failures are pre-existing, unrelated to this redesign** (see below) |
+| `pnpm --filter @workspace/backend test`                | ✅ 11/11                                                                                                             |
+| `pnpm build` (web + widget)                            | ✅ Pass                                                                                                              |
+| `pnpm --filter e2e test` (16 tests, Chromium + WebKit) | 9 passed / 7 failed — **all 7 failures are pre-existing, unrelated to this redesign** (see below)                    |
 
 ### Accessibility audit — two real bugs found and fixed
 
@@ -289,22 +291,19 @@ Computed exact WCAG contrast ratios (OKLCH→sRGB→relative-luminance, not visu
 - ✅ Verified safe (no changes needed): neo button text vs. gradient (7.05:1 / 9.39:1), marketing foreground vs. background (16.21:1), dashboard sidebar active-nav text vs. new gradient (uses existing dark `--sidebar-accent-foreground`, unchanged lightness profile from before).
 - ⚠️ **Flagged, not fixed (pre-existing, outside redesign scope):** the dashboard's `ConversationIdView` operator-side user-message bubble (shared `packages/ui` `AIMessage` component, untouched) uses `primary-foreground` text against a `from-primary to-[#7dd3e4]` gradient — the `#7dd3e4` end has the same low-contrast risk as the widget bug just fixed. Left alone per the "don't change shared component defaults outside the phase being redesigned" rule; flagging here since a real person (dashboard operator) could be affected.
 
-### E2E failures — all pre-existing, unrelated to this redesign
+### E2E status
 
-7 of 16 E2E tests fail, all against **stale test expectations that never matched the live site at any point in this session**:
-- `renders the hero and primary conversion path` expects heading `/never miss another/i` — the live headline has always been "An AI agent that handles your chat and voice support" (confirmed in the Phase 0 baseline screenshot, before any redesign work).
-- `shows pricing plans with plan CTAs` expects tiers named "Starter"/"Growth" — live tiers are "Free"/"Pro"/"Scale" (confirmed in Phase 0's pricing-page read).
-- `FAQ accordion expands` expects a "How long does setup take" question — no such question exists in the live FAQ content (confirmed in Phase 2's read of `faq.tsx`).
-- `shows the error screen for an unknown organization` (widget) times out waiting for specific error text — depends on live Convex backend validation behavior for a nonexistent org, not on any UI redesign change.
-
-These all trace back to the **same dead/unwired content draft** (`marketing/constants.ts`, `landing-view.tsx`) identified as unused in Phase 2 — the E2E tests appear to have been written against that draft, which was never actually connected to `page.tsx`. No file this redesign touched is referenced by any of these failing assertions. Recommend the repository owner either rewrite these 3 marketing E2E tests to match the live copy, or wire up the drafted content — both are content/product decisions outside this redesign's scope.
+The historical stale expectations described in the original redesign review have
+been replaced. The landing tests now assert the mounted hero copy and the
+Clerk-matched Starter `$79`, Growth `$199`, and Scale `Custom` catalog on both
+the homepage and full pricing page.
 
 ### Bundle size vs. Phase 0 baseline
 
-| Route | Phase 0 baseline | Final | Delta | Why |
-|---|---|---|---|---|
-| `/` (marketing) | 231 kB | 275 kB | +44 kB | Motion + Lenis, used directly for the hero/scroll (Three.js/R3F confirmed code-split separately, not in this number) |
-| widget `/` | 321 kB | 362 kB | +41 kB | Motion, now genuinely used for screen/message transitions |
+| Route           | Phase 0 baseline | Final  | Delta  | Why                                                                                                                  |
+| --------------- | ---------------- | ------ | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| `/` (marketing) | 231 kB           | 275 kB | +44 kB | Motion + Lenis, used directly for the hero/scroll (Three.js/R3F confirmed code-split separately, not in this number) |
+| widget `/`      | 321 kB           | 362 kB | +41 kB | Motion, now genuinely used for screen/message transitions                                                            |
 
 Both remain reasonable for their purpose; no runaway bundle growth.
 

@@ -5,16 +5,16 @@ import { PremiumFeatureOverlay } from "@/modules/billing/ui/components/premium-f
 const Page = () => {
   return (
     <Protect
-      condition={(has) => has({plan: "pro"})}
+      condition={(has) => has({ plan: "starter" }) || has({ plan: "growth" })}
       fallback={
         <PremiumFeatureOverlay>
           <CustomizationView />
         </PremiumFeatureOverlay>
       }
     >
-      <CustomizationView/>
+      <CustomizationView />
     </Protect>
-  )
-}
+  );
+};
 
 export default Page;

@@ -58,7 +58,7 @@ export function HowItWorks() {
             return (
               <div
                 key={step.num}
-                className="relative rounded-2xl border border-border/60 bg-card/60 p-6 backdrop-blur"
+                className="relative min-w-0 rounded-2xl border border-border/60 bg-card/60 p-6 backdrop-blur"
               >
                 {/* connector line for desktop */}
                 {idx < STEPS.length - 1 && (
@@ -79,7 +79,7 @@ export function HowItWorks() {
                   {step.description}
                 </p>
 
-                <pre className="rounded-lg bg-muted/40 ring-1 ring-border/60 p-3 text-xs font-mono text-muted-foreground overflow-x-auto">
+                <pre className="max-w-full overflow-x-auto rounded-lg bg-muted/40 p-3 font-mono text-xs text-muted-foreground ring-1 ring-border/60">
                   <code>{step.code}</code>
                 </pre>
               </div>

@@ -31,6 +31,23 @@ export const upsert = mutation({
       });
     }
 
+    if (args.vapiSettings.assistantId || args.vapiSettings.phoneNumber) {
+      const subscription = await ctx.db
+        .query("subscriptions")
+        .withIndex("by_organization_id", (q) => q.eq("organizationId", orgId))
+        .unique();
+      if (
+        subscription?.plan &&
+        subscription.plan !== "growth" &&
+        subscription.plan !== "scale"
+      ) {
+        throw new ConvexError({
+          code: "SUBSCRIPTION_REQUIRED",
+          message: "An active Growth subscription is required for voice",
+        });
+      }
+    }
+
     if (args.vapiSettings.assistantId) {
       const assistantOwner = await ctx.db
         .query("widgetSettings")

@@ -7,7 +7,7 @@ test.describe("marketing landing page", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /an ai agent that handles your chat and voice support/i,
+        name: /resolve more conversations before they reach your team/i,
       })
     ).toBeVisible();
     await expect(
@@ -15,16 +15,26 @@ test.describe("marketing landing page", () => {
     ).toHaveAttribute("href", "/sign-up");
   });
 
-  test("shows pricing plans with plan CTAs", async ({ page }) => {
+  test("shows Clerk-matched pricing plans with plan CTAs", async ({ page }) => {
     await page.goto("/#pricing");
 
     await expect(
       page.getByRole("heading", { name: /simple pricing/i })
     ).toBeVisible();
-    await expect(page.getByText("Free", { exact: true })).toBeVisible();
-    await expect(page.getByText("Pro", { exact: true })).toBeVisible();
+    await expect(page.getByText("Starter", { exact: true })).toBeVisible();
+    await expect(page.getByText("Growth", { exact: true })).toBeVisible();
     await expect(page.getByText("Scale", { exact: true })).toBeVisible();
     await expect(page.getByText("Most popular")).toBeVisible();
+
+    await expect(page.locator("#pricing [data-plan='starter']")).toContainText(
+      "$79"
+    );
+    await expect(page.locator("#pricing [data-plan='growth']")).toContainText(
+      "$199"
+    );
+    await expect(page.locator("#pricing [data-plan='scale']")).toContainText(
+      "Custom"
+    );
 
     const planCtas = page.locator("#pricing [data-slot='button']");
     await expect(planCtas).toHaveCount(3);
@@ -33,6 +43,14 @@ test.describe("marketing landing page", () => {
     );
     expect(new Set(backgrounds).size).toBe(1);
     expect(backgrounds[0]).toContain("linear-gradient");
+  });
+
+  test("full pricing page uses the same monthly prices", async ({ page }) => {
+    await page.goto("/pricing");
+
+    await expect(page.locator("[data-plan='starter']")).toContainText("$79");
+    await expect(page.locator("[data-plan='growth']")).toContainText("$199");
+    await expect(page.locator("[data-plan='scale']")).toContainText("Custom");
   });
 
   test("FAQ accordion expands", async ({ page }) => {

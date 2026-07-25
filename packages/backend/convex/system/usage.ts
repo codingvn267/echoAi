@@ -18,7 +18,39 @@ const ENTITLEMENTS = {
     monthlyTokens: 10_000_000,
     concurrentAiRequests: 5,
   },
+  starter: {
+    monthlyMessages: 500,
+    monthlyPromptCharacters: 25_000_000,
+    monthlyTokens: 10_000_000,
+    concurrentAiRequests: 5,
+  },
+  growth: {
+    monthlyMessages: 2_500,
+    monthlyPromptCharacters: 25_000_000,
+    monthlyTokens: 10_000_000,
+    concurrentAiRequests: 5,
+  },
+  scale: {
+    monthlyMessages: 5_000,
+    monthlyPromptCharacters: 25_000_000,
+    monthlyTokens: 10_000_000,
+    concurrentAiRequests: 5,
+  },
 } as const;
+
+type SubscriptionTier = keyof typeof ENTITLEMENTS;
+
+function getSubscriptionTier(
+  subscription?: {
+    status: string;
+    plan?: "starter" | "growth" | "scale";
+  } | null
+): SubscriptionTier {
+  if (subscription?.status !== "active") {
+    return "free";
+  }
+  return subscription.plan ?? "paid";
+}
 
 function utcMonth(timestamp: number): string {
   return new Date(timestamp).toISOString().slice(0, 7);
@@ -93,7 +125,7 @@ export const reserveMessage = internalMutation({
         q.eq("organizationId", conversation.organizationId)
       )
       .unique();
-    const entitlement = subscription?.status === "active" ? "paid" : "free";
+    const entitlement = getSubscriptionTier(subscription);
     const limits = ENTITLEMENTS[entitlement];
     const period = utcMonth(now);
     const usage = await ctx.db
@@ -225,7 +257,7 @@ export const recordTokens = internalMutation({
           q.eq("organizationId", args.organizationId)
         )
         .unique();
-      const entitlement = subscription?.status === "active" ? "paid" : "free";
+      const entitlement = getSubscriptionTier(subscription);
       if (
         totalInputTokens + totalOutputTokens >=
         ENTITLEMENTS[entitlement].monthlyTokens * 0.8

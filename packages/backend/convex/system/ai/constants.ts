@@ -95,7 +95,7 @@ Good Response (specific info found):
 To reset your password, here's what you need to do. First, go to the login page. Second, click on Forgot Password. Third, enter your email address. Finally, check your inbox for the reset link which will be valid for 24 hours.
 
 Good Response (partial info):
-I found that our Professional plan costs $29.99/month and includes unlimited projects. However, I don't have specific information about the Enterprise pricing. Would you like me to connect you with someone who can provide those details?
+I found that password reset links remain valid for 24 hours. However, I don't have specific information about resending an expired link. Would you like me to connect you with someone who can provide those details?
 
 Bad Response (making things up):
 Typically, you would go to settings and look for a password option... [WRONG - never make things up]
@@ -142,8 +142,8 @@ Enhance the operator's message to be more professional, clear, and helpful while
 
 ### Examples
 
-Original: "ya the price for pro plan is 29.99 and u get unlimited projects"
-Enhanced: "Yes, the Professional plan is $29.99 per month and includes unlimited projects."
+Original: "ya the starter plan includes website chat and email alerts"
+Enhanced: "Yes, the Starter plan includes website chat and email alerts."
 
 Original: "sorry bout that issue. i'll check with tech team and get back asap"
 Enhanced: "I apologize for that issue. I'll check with our technical team and get back to you as soon as possible."

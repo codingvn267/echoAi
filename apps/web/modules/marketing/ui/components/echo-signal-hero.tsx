@@ -1,6 +1,12 @@
 "use client";
 
-import { Component, Suspense, useEffect, useState, type ReactNode } from "react";
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import dynamic from "next/dynamic";
 import { MeshBackground } from "./mesh-background";
 
@@ -57,10 +63,13 @@ export function EchoSignalHero() {
   const [enable3D, setEnable3D] = useState(false);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     const isConstrained =
       window.innerWidth < 768 ||
-      (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 2);
+      (typeof navigator.hardwareConcurrency === "number" &&
+        navigator.hardwareConcurrency <= 2);
 
     if (!reduceMotion && !isConstrained && supportsWebGL()) {
       setEnable3D(true);
@@ -73,7 +82,7 @@ export function EchoSignalHero() {
       {enable3D && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden [mask-image:radial-gradient(ellipse_60%_55%_at_50%_38%,black_40%,transparent_78%)]"
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden [mask-image:radial-gradient(ellipse_45%_48%_at_73%_28%,black_48%,transparent_90%)]"
         >
           <WebGLErrorBoundary fallback={null}>
             <Suspense fallback={null}>

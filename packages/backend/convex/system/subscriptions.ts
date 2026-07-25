@@ -5,6 +5,9 @@ export const upsert = internalMutation({
   args: {
     organizationId: v.string(),
     status: v.string(),
+    plan: v.optional(
+      v.union(v.literal("starter"), v.literal("growth"), v.literal("scale"))
+    ),
     providerUpdatedAt: v.number(),
   },
   handler: async (ctx, args) => {
@@ -29,6 +32,7 @@ export const upsert = internalMutation({
       await ctx.db.patch(existingSubscription._id, {
         status: args.status,
         entitlement,
+        ...(args.plan ? { plan: args.plan } : {}),
         providerUpdatedAt: args.providerUpdatedAt,
         updatedAt,
       });
@@ -37,6 +41,7 @@ export const upsert = internalMutation({
         organizationId: args.organizationId,
         status: args.status,
         entitlement,
+        ...(args.plan ? { plan: args.plan } : {}),
         providerUpdatedAt: args.providerUpdatedAt,
         updatedAt,
       });

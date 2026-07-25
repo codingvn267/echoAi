@@ -197,7 +197,9 @@ const VoiceUpgrade = () => (
           <LockKeyholeIcon className="size-5 text-muted-foreground" />
         </div>
         <div>
-          <p className="font-medium">Voice integration is available on Pro</p>
+          <p className="font-medium">
+            Voice integration is available on Growth
+          </p>
           <p className="mt-1 max-w-xl text-sm text-muted-foreground">
             Connect Vapi to manage AI assistants, business phone numbers, and
             voice calls from Helora.
@@ -271,7 +273,7 @@ export const IntegrationsView = () => (
           </div>
         </div>
         <Protect
-          condition={(has) => has({ plan: "pro" })}
+          condition={(has) => has({ plan: "growth" })}
           fallback={<VoiceUpgrade />}
         >
           <VapiView embedded />

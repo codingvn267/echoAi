@@ -58,13 +58,16 @@ http.route({
         if (!status) {
           throw new Error("Missing subscription status");
         }
+        const plan = parseSubscriptionPlan(subscription);
 
         await clerkClient.organizations.updateOrganization(organizationId, {
-          maxAllowedMemberships: status === "active" ? 5 : 1,
+          maxAllowedMemberships:
+            status === "active" && plan === "growth" ? 5 : 1,
         });
         await ctx.runMutation(internal.system.subscriptions.upsert, {
           organizationId,
           status,
+          ...(plan ? { plan } : {}),
           providerUpdatedAt: parseProviderTimestamp(subscription),
         });
       }
@@ -199,7 +202,17 @@ type ClerkSubscriptionEvent = {
   updatedAt?: string | number;
   created_at?: string | number;
   payer?: { organization_id?: string };
+  items?: Array<{ plan?: { slug?: string } | null }>;
 };
+
+function parseSubscriptionPlan(
+  subscription: ClerkSubscriptionEvent
+): "starter" | "growth" | "scale" | undefined {
+  const slug = subscription.items?.find((item) => item.plan?.slug)?.plan?.slug;
+  return slug === "starter" || slug === "growth" || slug === "scale"
+    ? slug
+    : undefined;
+}
 
 type VapiWebhookBody = {
   message?: {
